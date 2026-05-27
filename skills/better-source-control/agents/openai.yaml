@@ -1,0 +1,3 @@
+display_name: Better Source Control
+short_description: Use Better sessions, checkpoints, workspaces, releases, and remotes instead of Git branches.
+default_prompt: Use Better as the native source-control workflow for this repository. Start a session, keep claims accurate, checkpoint work, compose and accept a release frontier, and use Git only as a bridge when explicitly needed.
