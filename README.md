@@ -1,21 +1,64 @@
 # Better Source Control
 
-**Agent-native source control for high-parallelism software work.**
+**A complete source-control system built for coding agents.**
 
-`better` is an experimental source-control system designed for a world where many coding agents work in the same codebase at the same time. Instead of using branches and pull requests as the main coordination primitive, Better gives agents first-class sessions, checkpoints, composition checks, coordination signals, native workspaces, and accepted release frontiers.
+Website: https://logesh45.github.io/better-source-control/
 
-Git remains useful as an import/export bridge. Better is the native collaboration layer.
+Better replaces branches and pull requests as the native coordination model for agent work. Import an existing Git repo, point your agent to the Better skill, let agents work through sessions and checkpoints, then export back to Git when you are ready.
+
+Git stays useful as the migration and publishing bridge. Better becomes the coordination layer for agents working in parallel.
 
 ## Why Better?
 
-Modern agents can run in parallel, but Git's default collaboration model still asks them to coordinate through branches, commits, merges, and PRs. That works for humans, but it creates avoidable conflict and duplicated work when dozens of agents are active.
+Modern coding agents can run in parallel, but Git's default collaboration model still asks them to coordinate through branches, commits, merges, and PRs. That works for humans. It creates avoidable conflict, duplicate work, and lost context when many agents are active.
 
-Better helps agents answer questions before they edit:
+Better gives agents source-control primitives designed for that world:
 
-- Who is already working on this file, symbol, or task?
-- Has similar work already been checkpointed or superseded?
-- Can these sessions compose safely into the next release frontier?
-- What should be reconciled before accepting a release?
+- sessions for scoped agent work
+- checkpoints as native save points
+- workspaces for isolated parallel changes
+- context lookup across files, symbols, sessions, and checkpoints
+- compose checks before integration
+- accepted release frontiers
+- Git import/export when you need compatibility
+
+## Built For Parallel Subagents
+
+The core difference is that Better lets agents ask source control for context before they duplicate work:
+
+- Who is working on this file or symbol?
+- Was similar work checkpointed before?
+- Was that previous attempt superseded?
+- Is there a checkpoint from an earlier session that should be reused?
+- Can these active sessions compose safely into the next release frontier?
+
+Instead of every agent starting from a blank `git status` view, an agent can inspect related sessions and checkpoints, bring back past work when useful, restore or reuse a prior checkpoint, or coordinate before touching the same surface area.
+
+That is the coordination layer Git was not designed to provide for many agents working in parallel.
+
+## Use It With Git
+
+Better is designed to meet existing repos where they are:
+
+```bash
+better init
+better import git
+```
+
+Then point your agent to the Better skill and let it take over:
+
+```bash
+npx skills add logesh45/better-source-control
+```
+
+When you are ready to publish through Git again:
+
+```bash
+better export git frontier --patch /tmp/better-frontier.patch
+better verify git-export
+```
+
+Hosted remote sync is coming soon. You can self-host `better-remote` today.
 
 ## Install
 
@@ -163,10 +206,11 @@ better --json context --task "describe the task" --file path/to/file.rs --symbol
 Start a session and claim the files you expect to touch:
 
 ```bash
-session=$(better --json session start \
+better --json session start \
   --task "describe the task" \
   --owner agent:codex \
-  --file path/to/file.rs | jq -r '.id')
+  --file path/to/file.rs
+session=<returned-session-id>
 ```
 
 Use a native Better workspace for isolated parallel work:
@@ -188,7 +232,8 @@ better compose --json
 Accept the next release frontier:
 
 ```bash
-release=$(better --json release propose --message "release message" | jq -r '.id')
+better --json release propose --message "release message"
+release=<returned-release-id>
 better --json release accept "$release" --by agent:codex
 better restore frontier
 ```
@@ -221,11 +266,7 @@ If you want to self-host the remote service in a container, this repository also
 docker compose up -d --build
 ```
 
-By default it starts `better-remote` on `http://127.0.0.1:8787` and stores data in a Docker volume. On ARM64 Linux containers, set the release target before building:
-
-```bash
-BETTER_TARGET=aarch64-unknown-linux-gnu docker compose up -d --build
-```
+By default it starts `better-remote` on `http://127.0.0.1:8787` and stores data in a Docker volume.
 
 See `docker/README.md` for the build arguments and storage notes.
 
