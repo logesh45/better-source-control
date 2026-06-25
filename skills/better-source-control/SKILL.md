@@ -96,7 +96,7 @@ better sync push
 
 If no remote exists: `better remote init local --url http://127.0.0.1:8787`.
 If push says `remote frontier advanced; pull first`, pull and inspect status; do not force-push.
-First/high-history pushes can upload many reachable objects until bounded delta sync lands.
+First/high-history pushes can still upload many reachable objects. Sync uses bounded missing-object negotiation, separate object upload, progress output, and metadata deltas when the remote supports them.
 
 ## Optional Git Bridge
 

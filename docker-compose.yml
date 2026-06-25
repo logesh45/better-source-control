@@ -4,9 +4,9 @@ services:
       context: .
       dockerfile: docker/Dockerfile
       args:
-        BETTER_VERSION: ${BETTER_VERSION:-0.1.0-rc.1}
+        BETTER_VERSION: ${BETTER_VERSION:-0.1.0-rc.3}
         BETTER_TARGET: ${BETTER_TARGET:-}
-    image: better-source-control/better-remote:${BETTER_VERSION:-0.1.0-rc.1}
+    image: better-source-control/better-remote:${BETTER_VERSION:-0.1.0-rc.3}
     ports:
       - "${BETTER_REMOTE_PORT:-8787}:8787"
     volumes:

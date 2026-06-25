@@ -267,6 +267,11 @@ docker compose up -d --build
 ```
 
 By default it starts `better-remote` on `http://127.0.0.1:8787` and stores data in a Docker volume.
+To force a specific archive target, set `BETTER_TARGET`, for example:
+
+```bash
+BETTER_TARGET=aarch64-unknown-linux-gnu docker compose up -d --build
+```
 
 See `docker/README.md` for the build arguments and storage notes.
 
