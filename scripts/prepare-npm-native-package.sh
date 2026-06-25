@@ -80,7 +80,7 @@ cat >"$package_dir/package.json" <<JSON
   "name": "$package_name",
   "version": "$version",
   "description": "Native Better binary for $target.",
-  "license": "MIT",
+  "license": "MIT OR Apache-2.0",
   "os": ["$npm_os"],
   "cpu": ["$npm_cpu"],
   "files": ["bin/better"]

@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "version": "0.1.0-rc.2",
+  "artifacts": [
+    {"target": "aarch64-apple-darwin", "name": "better-0.1.0-rc.2-aarch64-apple-darwin.tar.gz", "file": "better-0.1.0-rc.2-aarch64-apple-darwin.tar.gz", "url": "https://github.com/logesh45/better-source-control/releases/download/v0.1.0-rc.2/better-0.1.0-rc.2-aarch64-apple-darwin.tar.gz", "sha256": "7ba8c511f33bf60429ec83ae87ae15a252ab85feadfb411f34a1dbf7b07ff978"},
+    {"target": "aarch64-unknown-linux-gnu", "name": "better-0.1.0-rc.2-aarch64-unknown-linux-gnu.tar.gz", "file": "better-0.1.0-rc.2-aarch64-unknown-linux-gnu.tar.gz", "url": "https://github.com/logesh45/better-source-control/releases/download/v0.1.0-rc.2/better-0.1.0-rc.2-aarch64-unknown-linux-gnu.tar.gz", "sha256": "be3a702d4d5f77aff35846d2db9397fdd34b53d124402ac2e9d4141d23858d60"},
+    {"target": "x86_64-apple-darwin", "name": "better-0.1.0-rc.2-x86_64-apple-darwin.tar.gz", "file": "better-0.1.0-rc.2-x86_64-apple-darwin.tar.gz", "url": "https://github.com/logesh45/better-source-control/releases/download/v0.1.0-rc.2/better-0.1.0-rc.2-x86_64-apple-darwin.tar.gz", "sha256": "3e64ac067beca9d4f79d1935990e0e836c5d6c486efec72d5cc6a9d798eeefee"},
+    {"target": "x86_64-unknown-linux-gnu", "name": "better-0.1.0-rc.2-x86_64-unknown-linux-gnu.tar.gz", "file": "better-0.1.0-rc.2-x86_64-unknown-linux-gnu.tar.gz", "url": "https://github.com/logesh45/better-source-control/releases/download/v0.1.0-rc.2/better-0.1.0-rc.2-x86_64-unknown-linux-gnu.tar.gz", "sha256": "f7bd760e48490067c28c1ee0d523be32a2d225e40df86d1e1a775c75982e88e4"}
+  ]
+}
