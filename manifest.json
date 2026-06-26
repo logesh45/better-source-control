@@ -1,10 +1,10 @@
 {
   "schema_version": 1,
-  "version": "0.1.0-rc.3",
+  "version": "0.1.0",
   "artifacts": [
-    {"target": "aarch64-apple-darwin", "name": "better-0.1.0-rc.3-aarch64-apple-darwin.tar.gz", "file": "better-0.1.0-rc.3-aarch64-apple-darwin.tar.gz", "url": "https://github.com/logesh45/better-source-control/releases/download/v0.1.0-rc.3/better-0.1.0-rc.3-aarch64-apple-darwin.tar.gz", "sha256": "96da226c85e98b5ccc4ab792da7f29cdff2cd978c45346485717d6da7d60b819"},
-    {"target": "aarch64-unknown-linux-gnu", "name": "better-0.1.0-rc.3-aarch64-unknown-linux-gnu.tar.gz", "file": "better-0.1.0-rc.3-aarch64-unknown-linux-gnu.tar.gz", "url": "https://github.com/logesh45/better-source-control/releases/download/v0.1.0-rc.3/better-0.1.0-rc.3-aarch64-unknown-linux-gnu.tar.gz", "sha256": "dc8d1fc442a5e13cc3098509d331b8de0bb00c0fbaae63d98e16cfc34eea3bdd"},
-    {"target": "x86_64-apple-darwin", "name": "better-0.1.0-rc.3-x86_64-apple-darwin.tar.gz", "file": "better-0.1.0-rc.3-x86_64-apple-darwin.tar.gz", "url": "https://github.com/logesh45/better-source-control/releases/download/v0.1.0-rc.3/better-0.1.0-rc.3-x86_64-apple-darwin.tar.gz", "sha256": "48f45f40349f74393ddbbe9aad6a034df62d7dc35df859854af2880a00e0a9b5"},
-    {"target": "x86_64-unknown-linux-gnu", "name": "better-0.1.0-rc.3-x86_64-unknown-linux-gnu.tar.gz", "file": "better-0.1.0-rc.3-x86_64-unknown-linux-gnu.tar.gz", "url": "https://github.com/logesh45/better-source-control/releases/download/v0.1.0-rc.3/better-0.1.0-rc.3-x86_64-unknown-linux-gnu.tar.gz", "sha256": "8a8f7c911ef27b69129ddcdbf2028b44dbe913d50b19760ed3477cae969e0266"}
+    {"target": "aarch64-apple-darwin", "name": "better-0.1.0-aarch64-apple-darwin.tar.gz", "file": "better-0.1.0-aarch64-apple-darwin.tar.gz", "url": "https://github.com/logesh45/better-source-control/releases/download/v0.1.0/better-0.1.0-aarch64-apple-darwin.tar.gz", "sha256": "cba99bc24c49f4abc3dace78f1f60857287ebe80f511680b48c3a9f50fa97a95"},
+    {"target": "aarch64-unknown-linux-gnu", "name": "better-0.1.0-aarch64-unknown-linux-gnu.tar.gz", "file": "better-0.1.0-aarch64-unknown-linux-gnu.tar.gz", "url": "https://github.com/logesh45/better-source-control/releases/download/v0.1.0/better-0.1.0-aarch64-unknown-linux-gnu.tar.gz", "sha256": "5c733b7bf70969f78751f5cad6546b0428182793e8be0764cafc904d37dfccc5"},
+    {"target": "x86_64-apple-darwin", "name": "better-0.1.0-x86_64-apple-darwin.tar.gz", "file": "better-0.1.0-x86_64-apple-darwin.tar.gz", "url": "https://github.com/logesh45/better-source-control/releases/download/v0.1.0/better-0.1.0-x86_64-apple-darwin.tar.gz", "sha256": "dc63f88d76b877f4eb6c691c0cc1ed5d802ac796316bc7f94ba81d4a5ff594a1"},
+    {"target": "x86_64-unknown-linux-gnu", "name": "better-0.1.0-x86_64-unknown-linux-gnu.tar.gz", "file": "better-0.1.0-x86_64-unknown-linux-gnu.tar.gz", "url": "https://github.com/logesh45/better-source-control/releases/download/v0.1.0/better-0.1.0-x86_64-unknown-linux-gnu.tar.gz", "sha256": "14a93803363973a4b4f87512e5cd4834875a39054cce08361532d5ed8df32057"}
   ]
 }

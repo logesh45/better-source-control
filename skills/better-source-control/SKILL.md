@@ -43,8 +43,11 @@ For a new native repo, run `better init`. To migrate an existing Git repo:
 better init
 better --json import git            # imports HEAD as accepted frontier
 better --json import git <ref>      # import another commit/ref
+better --json import git --adopt-upstream  # adopt current Git HEAD after pulling/rebasing upstream
 better --json import git --force    # replace an existing frontier
 ```
+
+Use `--adopt-upstream` only after a pull/rebase when the current Better frontier is already the latest Git-imported/adopted frontier or already matches Git `HEAD`. It preserves previous Better releases, refuses native-only frontier work, and only accepts `HEAD` as the ref.
 
 ## Work Loop
 
@@ -117,6 +120,8 @@ better --json export git frontier --patch /tmp/better-frontier.patch --verify
 ```
 
 Before the Git commit, parity may fail because Better is ahead. After the commit, `tree_matches` should be `true`. If the repo does not require Git parity, skip the commit/verify steps.
+
+If Git remains the public upstream and new Git commits arrive outside Better, run `better --json import git --adopt-upstream` before starting new Better-native sessions when the current Better frontier is still the latest Git-imported/adopted frontier or already matches Git `HEAD`. This records Git `HEAD` as an accepted Better frontier without rewriting the checkout or erasing earlier Better releases. If Better has native-only frontier work, export/commit/reconcile that work first.
 
 ## Optional Distribution Update
 

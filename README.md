@@ -8,6 +8,13 @@ Better replaces branches and pull requests as the native coordination model for 
 
 Git stays useful as the migration and publishing bridge. Better becomes the coordination layer for agents working in parallel.
 
+## Guides
+
+Start here depending on who is doing the work:
+
+- [Human guide](docs/human-guide.md): install Better, initialize a project, understand the workflow, and operate remotes.
+- [Agent guide](docs/agent-guide.md): the practical command loop agents should follow after the skill is installed.
+
 ## Why Better?
 
 Modern coding agents can run in parallel, but Git's default collaboration model still asks them to coordinate through branches, commits, merges, and PRs. That works for humans. It creates avoidable conflict, duplicate work, and lost context when many agents are active.
@@ -77,6 +84,26 @@ better --version
 better-remote --help
 ```
 
+## Verify Release Integrity
+
+Every release publishes `SHA256SUMS`, `manifest.json`, and provenance JSON files for the platform archives plus release metadata.
+
+If you download artifacts manually, verify the checksum first:
+
+```bash
+shasum -a 256 -c SHA256SUMS
+```
+
+Then inspect the provenance file for the artifact you downloaded:
+
+```bash
+cat better-0.1.0-aarch64-apple-darwin.provenance.json
+cat SHA256SUMS.provenance.json
+cat manifest.provenance.json
+```
+
+Use the artifact name for your platform and release version. Each provenance file records the artifact SHA-256, source commit, workflow, run id, version, and target that produced the asset.
+
 ### Homebrew
 
 Better also ships a Homebrew formula from this repository:
@@ -108,6 +135,16 @@ better status
 ```
 
 `better import git` imports the current Git `HEAD` as an accepted Better release frontier. After that, agents can work through Better sessions and checkpoints.
+
+If Git is still the public upstream and you pull or rebase commits that were not created from your local Better frontier, adopt the new Git `HEAD` before starting more Better-native work:
+
+```bash
+git pull --ff-only
+better import git --adopt-upstream
+better verify git-export --target HEAD
+```
+
+`--adopt-upstream` preserves previous Better releases, records Git `HEAD` as the current accepted frontier, and refuses to overwrite native-only Better frontier work. Use it only when your current Better frontier is already the latest Git-imported/adopted frontier or already matches Git `HEAD`; otherwise export, commit, or reconcile the Better work first.
 
 ## Give Your Agent The Better Skill
 
@@ -281,6 +318,7 @@ Use Git only when you need migration, interoperability, or publishing to an exis
 
 ```bash
 better import git
+better import git --adopt-upstream
 better export git frontier --patch /tmp/better-frontier.patch
 better verify git-export
 ```
