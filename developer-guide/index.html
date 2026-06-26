@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Better Developer Guide</title>
+  <meta name="description" content="Set up Better in a project, import Git history, review agent sessions, accept release frontiers, and export back to Git when needed.">
+  <link rel="canonical" href="https://betterforagents.com/developer-guide/">
+  <meta name="theme-color" content="#f7f8f5">
+  <style>
+    :root { color-scheme: light; --paper: #f7f8f5; --paper-2: #ffffff; --ink: #101214; --muted: #5f686d; --line: #d5dbd2; --amber: #d58b00; --code-bg: #0f1416; --code-fg: #edf4ee; --radius: 8px; --max: 920px; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--paper); color: var(--ink); font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; line-height: 1.55; }
+    a { color: inherit; }
+    .shell { width: min(var(--max), calc(100% - 40px)); margin: 0 auto; }
+    header { border-bottom: 1px solid var(--line); background: rgba(255, 255, 255, 0.78); }
+    nav { min-height: 68px; display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+    nav a { text-decoration: none; font-weight: 700; }
+    .links { display: flex; gap: 0.8rem; flex-wrap: wrap; color: var(--muted); font-size: 0.95rem; }
+    main { padding: 4.5rem 0; }
+    h1 { max-width: 800px; margin: 0; font-size: clamp(2.4rem, 8vw, 4.8rem); line-height: 0.98; letter-spacing: 0; }
+    .lead { max-width: 720px; margin: 1.4rem 0 2.4rem; color: #32383b; font-size: 1.2rem; }
+    section { padding: 2rem 0; border-top: 1px solid var(--line); }
+    h2 { margin: 0 0 0.8rem; font-size: 1.45rem; letter-spacing: 0; }
+    p { margin: 0 0 1rem; }
+    pre { overflow-x: auto; margin: 1rem 0; padding: 1rem; border-radius: var(--radius); background: var(--code-bg); color: var(--code-fg); font-size: 0.92rem; line-height: 1.5; }
+    code { font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace; }
+    .note { border-left: 4px solid var(--amber); padding: 0.8rem 1rem; background: var(--paper-2); color: #273034; }
+    footer { padding: 2rem 0 3rem; color: var(--muted); border-top: 1px solid var(--line); }
+  </style>
+</head>
+<body>
+  <header>
+    <nav class="shell" aria-label="Primary navigation">
+      <a href="/">Better</a>
+      <div class="links">
+        <a href="/install/">Install</a>
+        <a href="/skill/">Agent skill</a>
+        <a href="/agent-guide/">Agent guide</a>
+        <a href="/remote/">Remote sync</a>
+      </div>
+    </nav>
+  </header>
+  <main class="shell">
+    <h1>Developer guide for Better.</h1>
+    <p class="lead">Better is source control for teams that run coding agents in parallel. Humans still decide what ships, while agents get native coordination primitives.</p>
+
+    <section aria-labelledby="start">
+      <h2 id="start">Start A Project</h2>
+      <p>Create a new Better repository:</p>
+      <pre><code>better init
+better doctor</code></pre>
+      <p>For an existing Git repository, import the current Git <code>HEAD</code> as the accepted Better frontier:</p>
+      <pre><code>better init
+better import git
+better status</code></pre>
+    </section>
+
+    <section aria-labelledby="review">
+      <h2 id="review">Review Agent Work</h2>
+      <p>Before assigning or accepting work, inspect coordination state and ask Better what related work already exists:</p>
+      <pre><code>better status
+better changes
+better release status
+better context --task "describe the work" --file path/to/file.rs --symbol SymbolName</code></pre>
+      <p>When active sessions are ready, check composition:</p>
+      <pre><code>better compose --json</code></pre>
+    </section>
+
+    <section aria-labelledby="frontier">
+      <h2 id="frontier">Accept A Release Frontier</h2>
+      <p>If compose is clean, propose and accept the next release frontier:</p>
+      <pre><code>better release propose --message "describe the release"
+better release accept &lt;release-id&gt; --by human:&lt;name&gt;
+better restore frontier</code></pre>
+      <p class="note"><code>better restore frontier</code> updates the checkout to match the accepted Better frontier.</p>
+    </section>
+
+    <section aria-labelledby="git">
+      <h2 id="git">Use Git As The Bridge</h2>
+      <p>If Git is still the public upstream and new Git commits arrive outside Better, adopt upstream before more Better-native work when it is safe to do so:</p>
+      <pre><code>git pull --ff-only
+better import git --adopt-upstream
+better verify git-export --target HEAD</code></pre>
+      <p>Export the accepted Better frontier when publishing through Git:</p>
+      <pre><code>better export git frontier --patch /tmp/better-frontier.patch
+better verify git-export</code></pre>
+    </section>
+  </main>
+  <footer class="shell">
+    <p><a href="/">Back to Better</a></p>
+  </footer>
+</body>
+</html>

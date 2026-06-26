@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Install Better Source Control</title>
+  <meta name="description" content="Install Better with the curl installer or Homebrew, then verify better and better-remote before using agent-native source control.">
+  <link rel="canonical" href="https://betterforagents.com/install/">
+  <meta name="theme-color" content="#f7f8f5">
+  <style>
+    :root {
+      color-scheme: light;
+      --paper: #f7f8f5;
+      --paper-2: #ffffff;
+      --ink: #101214;
+      --muted: #5f686d;
+      --line: #d5dbd2;
+      --blue: #1769ff;
+      --green: #1f9f6b;
+      --code-bg: #0f1416;
+      --code-fg: #edf4ee;
+      --radius: 8px;
+      --max: 900px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.55;
+    }
+
+    a { color: inherit; }
+
+    .shell {
+      width: min(var(--max), calc(100% - 40px));
+      margin: 0 auto;
+    }
+
+    header {
+      border-bottom: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.78);
+    }
+
+    nav {
+      min-height: 68px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    nav a {
+      text-decoration: none;
+      font-weight: 700;
+    }
+
+    .links {
+      display: flex;
+      gap: 0.8rem;
+      flex-wrap: wrap;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    main { padding: 4.5rem 0; }
+
+    h1 {
+      max-width: 760px;
+      margin: 0;
+      font-size: clamp(2.4rem, 8vw, 4.8rem);
+      line-height: 0.98;
+      letter-spacing: 0;
+    }
+
+    .lead {
+      max-width: 710px;
+      margin: 1.4rem 0 2.4rem;
+      color: #32383b;
+      font-size: 1.2rem;
+    }
+
+    section {
+      padding: 2rem 0;
+      border-top: 1px solid var(--line);
+    }
+
+    h2 {
+      margin: 0 0 0.8rem;
+      font-size: 1.45rem;
+      letter-spacing: 0;
+    }
+
+    p { margin: 0 0 1rem; }
+
+    pre {
+      overflow-x: auto;
+      margin: 1rem 0;
+      padding: 1rem;
+      border-radius: var(--radius);
+      background: var(--code-bg);
+      color: var(--code-fg);
+      font-size: 0.92rem;
+      line-height: 1.5;
+    }
+
+    code {
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+    }
+
+    .note {
+      border-left: 4px solid var(--green);
+      padding: 0.8rem 1rem;
+      background: var(--paper-2);
+      color: #273034;
+    }
+
+    footer {
+      padding: 2rem 0 3rem;
+      color: var(--muted);
+      border-top: 1px solid var(--line);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav class="shell" aria-label="Primary navigation">
+      <a href="/">Better</a>
+      <div class="links">
+        <a href="/skill/">Agent skill</a>
+        <a href="/agent-guide/">Agent guide</a>
+        <a href="/developer-guide/">Developer guide</a>
+        <a href="/remote/">Remote sync</a>
+      </div>
+    </nav>
+  </header>
+  <main class="shell">
+    <h1>Install Better source control.</h1>
+    <p class="lead">Better installs as a small CLI for agent-native sessions, checkpoints, context lookup, composition, release frontiers, and Git interoperability.</p>
+
+    <section aria-labelledby="curl-installer">
+      <h2 id="curl-installer">Curl Installer</h2>
+      <p>Install the latest release with the project installer:</p>
+      <pre><code>curl -fsSL https://raw.githubusercontent.com/logesh45/better-source-control/main/install.sh | bash</code></pre>
+      <p class="note">The installer places <code>better</code> and <code>better-remote</code> in <code>$HOME/.local/bin</code> by default. If that directory is not on your <code>PATH</code>, it prints the export command. It does not edit shell startup files for you.</p>
+      <pre><code>export PATH="$HOME/.local/bin:$PATH"</code></pre>
+    </section>
+
+    <section aria-labelledby="homebrew">
+      <h2 id="homebrew">Homebrew</h2>
+      <p>Homebrew users can install from the project tap:</p>
+      <pre><code>brew tap logesh45/better-source-control https://github.com/logesh45/better-source-control
+brew install logesh45/better-source-control/better</code></pre>
+    </section>
+
+    <section aria-labelledby="verify">
+      <h2 id="verify">Verify The Install</h2>
+      <p>Check both the local source-control CLI and the self-hostable remote service binary:</p>
+      <pre><code>better --version
+better-remote --help</code></pre>
+      <p>For manual artifact downloads, verify <code>SHA256SUMS</code> and inspect the provenance JSON files published with each release.</p>
+    </section>
+  </main>
+  <footer class="shell">
+    <p><a href="/">Back to Better</a></p>
+  </footer>
+</body>
+</html>

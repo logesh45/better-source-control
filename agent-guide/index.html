@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Better Agent Guide</title>
+  <meta name="description" content="A practical Better workflow for coding agents: inspect context, start sessions, checkpoint work, compose, and report verification.">
+  <link rel="canonical" href="https://betterforagents.com/agent-guide/">
+  <meta name="theme-color" content="#f7f8f5">
+  <style>
+    :root { color-scheme: light; --paper: #f7f8f5; --paper-2: #ffffff; --ink: #101214; --muted: #5f686d; --line: #d5dbd2; --blue: #1769ff; --code-bg: #0f1416; --code-fg: #edf4ee; --radius: 8px; --max: 920px; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--paper); color: var(--ink); font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; line-height: 1.55; }
+    a { color: inherit; }
+    .shell { width: min(var(--max), calc(100% - 40px)); margin: 0 auto; }
+    header { border-bottom: 1px solid var(--line); background: rgba(255, 255, 255, 0.78); }
+    nav { min-height: 68px; display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+    nav a { text-decoration: none; font-weight: 700; }
+    .links { display: flex; gap: 0.8rem; flex-wrap: wrap; color: var(--muted); font-size: 0.95rem; }
+    main { padding: 4.5rem 0; }
+    h1 { max-width: 790px; margin: 0; font-size: clamp(2.4rem, 8vw, 4.8rem); line-height: 0.98; letter-spacing: 0; }
+    .lead { max-width: 720px; margin: 1.4rem 0 2.4rem; color: #32383b; font-size: 1.2rem; }
+    section { padding: 2rem 0; border-top: 1px solid var(--line); }
+    h2 { margin: 0 0 0.8rem; font-size: 1.45rem; letter-spacing: 0; }
+    p { margin: 0 0 1rem; }
+    pre { overflow-x: auto; margin: 1rem 0; padding: 1rem; border-radius: var(--radius); background: var(--code-bg); color: var(--code-fg); font-size: 0.92rem; line-height: 1.5; }
+    code { font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace; }
+    .note { border-left: 4px solid var(--blue); padding: 0.8rem 1rem; background: var(--paper-2); color: #273034; }
+    footer { padding: 2rem 0 3rem; color: var(--muted); border-top: 1px solid var(--line); }
+  </style>
+</head>
+<body>
+  <header>
+    <nav class="shell" aria-label="Primary navigation">
+      <a href="/">Better</a>
+      <div class="links">
+        <a href="/install/">Install</a>
+        <a href="/skill/">Agent skill</a>
+        <a href="/developer-guide/">Developer guide</a>
+        <a href="/remote/">Remote sync</a>
+      </div>
+    </nav>
+  </header>
+  <main class="shell">
+    <h1>Agent workflow for Better.</h1>
+    <p class="lead">Use Better as the native source-control system for agent work. Git is only a bridge for import, export, or publishing when the human asks for it.</p>
+
+    <section aria-labelledby="first-checks">
+      <h2 id="first-checks">First Checks</h2>
+      <p>Before editing, inspect the current Better state and prior related work:</p>
+      <pre><code>better --json status
+better --json release status
+better changes
+better --json context --task "short task description" --file path/to/file --symbol SymbolName</code></pre>
+      <p class="note">If context returns <code>reuse_or_inspect</code>, inspect the referenced checkpoint or replacement session before duplicating work. If it returns <code>coordinate</code>, related active work exists.</p>
+    </section>
+
+    <section aria-labelledby="session">
+      <h2 id="session">Start A Session</h2>
+      <p>Create a session with a clear task and accurate file claims:</p>
+      <pre><code>better --json session start \
+  --task "short task description" \
+  --owner agent:&lt;name&gt; \
+  --file path/to/file</code></pre>
+      <p>If you later touch another file, update the claim before checkpointing:</p>
+      <pre><code>better session update &lt;session-id&gt; --file path/to/other-file</code></pre>
+    </section>
+
+    <section aria-labelledby="checkpoint">
+      <h2 id="checkpoint">Checkpoint And Compose</h2>
+      <p>Prefer Better workspaces for isolated parallel work, then checkpoint the workspace:</p>
+      <pre><code>better workspace create --session &lt;session-id&gt;
+better --json workspace status --session &lt;session-id&gt;
+better --json checkpoint --session &lt;session-id&gt; --workspace --message "what changed"</code></pre>
+      <p>Before integration, run the required project checks and inspect composition:</p>
+      <pre><code>better --json status
+better compose --json</code></pre>
+    </section>
+
+    <section aria-labelledby="report">
+      <h2 id="report">Report Back</h2>
+      <p>End with concrete evidence: session id, checkpoint id, release id if accepted, remote sync result if used, verification commands and outcomes, and any remaining Better signals or risks.</p>
+    </section>
+  </main>
+  <footer class="shell">
+    <p><a href="/">Back to Better</a></p>
+  </footer>
+</body>
+</html>

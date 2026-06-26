@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Better Remote Sync</title>
+  <meta name="description" content="Run a self-hosted better-remote service today and sync Better objects, metadata, and accepted frontier state between checkouts.">
+  <link rel="canonical" href="https://betterforagents.com/remote/">
+  <meta name="theme-color" content="#f7f8f5">
+  <style>
+    :root { color-scheme: light; --paper: #f7f8f5; --paper-2: #ffffff; --ink: #101214; --muted: #5f686d; --line: #d5dbd2; --green: #1f9f6b; --code-bg: #0f1416; --code-fg: #edf4ee; --radius: 8px; --max: 920px; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--paper); color: var(--ink); font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; line-height: 1.55; }
+    a { color: inherit; }
+    .shell { width: min(var(--max), calc(100% - 40px)); margin: 0 auto; }
+    header { border-bottom: 1px solid var(--line); background: rgba(255, 255, 255, 0.78); }
+    nav { min-height: 68px; display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+    nav a { text-decoration: none; font-weight: 700; }
+    .links { display: flex; gap: 0.8rem; flex-wrap: wrap; color: var(--muted); font-size: 0.95rem; }
+    main { padding: 4.5rem 0; }
+    h1 { max-width: 790px; margin: 0; font-size: clamp(2.4rem, 8vw, 4.8rem); line-height: 0.98; letter-spacing: 0; }
+    .lead { max-width: 720px; margin: 1.4rem 0 2.4rem; color: #32383b; font-size: 1.2rem; }
+    section { padding: 2rem 0; border-top: 1px solid var(--line); }
+    h2 { margin: 0 0 0.8rem; font-size: 1.45rem; letter-spacing: 0; }
+    p { margin: 0 0 1rem; }
+    pre { overflow-x: auto; margin: 1rem 0; padding: 1rem; border-radius: var(--radius); background: var(--code-bg); color: var(--code-fg); font-size: 0.92rem; line-height: 1.5; }
+    code { font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace; }
+    .note { border-left: 4px solid var(--green); padding: 0.8rem 1rem; background: var(--paper-2); color: #273034; }
+    footer { padding: 2rem 0 3rem; color: var(--muted); border-top: 1px solid var(--line); }
+  </style>
+</head>
+<body>
+  <header>
+    <nav class="shell" aria-label="Primary navigation">
+      <a href="/">Better</a>
+      <div class="links">
+        <a href="/install/">Install</a>
+        <a href="/skill/">Agent skill</a>
+        <a href="/agent-guide/">Agent guide</a>
+        <a href="/developer-guide/">Developer guide</a>
+      </div>
+    </nav>
+  </header>
+  <main class="shell">
+    <h1>Remote sync for Better state.</h1>
+    <p class="lead"><code>better-remote</code> stores Better objects, metadata, and frontier state so multiple checkouts can exchange native source-control history.</p>
+
+    <section aria-labelledby="hosted">
+      <h2 id="hosted">Hosted Remote</h2>
+      <p class="note">Hosted Better remote sync is coming soon. Today, use the self-hosted <code>better-remote</code> service for remote coordination.</p>
+    </section>
+
+    <section aria-labelledby="local">
+      <h2 id="local">Run A Local Remote</h2>
+      <p>Start the remote service with a local storage directory:</p>
+      <pre><code>better-remote --bind 127.0.0.1:8787 --storage-root .better-remote</code></pre>
+      <p>Configure a repository and sync Better state:</p>
+      <pre><code>better remote init local --url http://127.0.0.1:8787
+better sync push
+better sync pull</code></pre>
+    </section>
+
+    <section aria-labelledby="docker">
+      <h2 id="docker">Docker Compose</h2>
+      <p>The release repository also includes a Docker Compose setup for the remote service:</p>
+      <pre><code>docker compose up -d --build</code></pre>
+    </section>
+
+    <section aria-labelledby="coordination">
+      <h2 id="coordination">Remote Coordination Rule</h2>
+      <p>If push reports that the remote frontier advanced, pull first and inspect Better status before continuing. Reconcile the work instead of overwriting remote state.</p>
+    </section>
+  </main>
+  <footer class="shell">
+    <p><a href="/">Back to Better</a></p>
+  </footer>
+</body>
+</html>

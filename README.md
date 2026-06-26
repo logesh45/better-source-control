@@ -2,7 +2,7 @@
 
 **A complete source-control system built for coding agents.**
 
-Website: https://logesh45.github.io/better-source-control/
+Website: https://betterforagents.com/
 
 Better replaces branches and pull requests as the native coordination model for agent work. Import an existing Git repo, point your agent to the Better skill, let agents work through sessions and checkpoints, then export back to Git when you are ready.
 
