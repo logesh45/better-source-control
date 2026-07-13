@@ -34,7 +34,7 @@ BETTER_TARGET=aarch64-unknown-linux-gnu docker compose up -d --build
 ## Configuration
 
 ```bash
-BETTER_VERSION=0.1.0
+BETTER_VERSION=0.1.1
 BETTER_TARGET=
 BETTER_REMOTE_PORT=8787
 ```
