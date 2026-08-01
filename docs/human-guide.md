@@ -108,6 +108,14 @@ better restore frontier
 
 `better restore frontier` updates the checkout to match the accepted Better frontier.
 
+## Session Cleanup
+
+```bash
+better session abandon <session-id> --reason "discarded approach"
+```
+
+Use `abandon` when a review determines the work is intentionally discarded. Use `supersede` when a checkpointed replacement owns the work, and use `refresh` when an agent should continue stale work from the current frontier. Abandonment releases active claims but preserves the session, checkpoints, operation history, workspace, files, and stored objects for inspection. It does not delete a workspace or files, and `missing_claimed_path` remains strict for active sessions. Syncing abandoned sessions requires Better v0.1.0 or later on both peers.
+
 ## Working With Git
 
 Git is the compatibility bridge, not the native coordination model.

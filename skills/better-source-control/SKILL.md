@@ -9,24 +9,7 @@ Use Better as the source-control system. Git operations are optional bridge step
 
 ## Quick Start
 
-Use the distributed `better` binary from `PATH`.
-
-If Better is not installed, use the curl installer:
-
-```bash
-curl -fsSL https://raw.githubusercontent.com/logesh45/better-source-control/main/install.sh | bash
-export PATH="$HOME/.local/bin:$PATH"   # only if the installer says this shell cannot see it
-better --version
-```
-
-Homebrew users can install with:
-
-```bash
-brew tap logesh45/better-source-control https://github.com/logesh45/better-source-control
-brew install logesh45/better-source-control/better
-```
-
-Use `better update` for curl installs. Use `brew upgrade better` for Homebrew installs.
+Use the distributed `better` binary from `PATH`; this skill assumes Better is already installed.
 
 ```bash
 better --json status
@@ -71,6 +54,14 @@ better --json checkpoint --session "$session" --message "what changed"
 ```
 
 Update claims before checkpointing. Git status is not enough for Better release composition.
+
+## Session Cleanup
+
+```bash
+better session abandon <session-id> --reason "discarded approach"
+```
+
+Use `abandon` when work is intentionally discarded. Use `supersede` when a checkpointed replacement owns the work, and use `refresh` when continuing stale work from the current frontier. Abandonment releases active claims but preserves the session, checkpoints, operation history, workspace, files, and stored objects for inspection. It does not delete a workspace or files, and `missing_claimed_path` remains strict for active sessions. Syncing abandoned sessions requires Better v0.1.0 or later on both peers.
 
 ## Release
 

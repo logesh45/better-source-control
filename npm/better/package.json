@@ -1,6 +1,6 @@
 {
   "name": "@better-scm/better",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Agent-native source control for high-parallelism software work.",
   "license": "MIT",
   "repository": {
@@ -14,11 +14,11 @@
     "postinstall": "node scripts/postinstall.js"
   },
   "optionalDependencies": {
-    "@better-scm/better-darwin-arm64": "0.1.1",
-    "@better-scm/better-darwin-x64": "0.1.1",
-    "@better-scm/better-linux-arm64": "0.1.1",
-    "@better-scm/better-linux-x64": "0.1.1",
-    "@better-scm/better-win32-x64": "0.1.1"
+    "@better-scm/better-darwin-arm64": "0.1.2",
+    "@better-scm/better-darwin-x64": "0.1.2",
+    "@better-scm/better-linux-arm64": "0.1.2",
+    "@better-scm/better-linux-x64": "0.1.2",
+    "@better-scm/better-win32-x64": "0.1.2"
   },
   "engines": {
     "node": ">=18"

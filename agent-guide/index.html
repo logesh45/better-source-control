@@ -77,6 +77,13 @@ better --json checkpoint --session &lt;session-id&gt; --workspace --message "wha
 better compose --json</code></pre>
     </section>
 
+    <section aria-labelledby="session-cleanup">
+      <h2 id="session-cleanup">Session Cleanup</h2>
+      <pre><code>better session abandon &lt;session-id&gt; --reason "discarded approach"</code></pre>
+      <p>Use <code>abandon</code> when work is intentionally discarded. Use <code>supersede</code> when a checkpointed replacement owns the work, and use <code>refresh</code> when continuing stale work from the current frontier.</p>
+      <p>Abandonment releases active claims but preserves the session, checkpoints, operation history, workspace, files, and stored objects for inspection. It does not delete a workspace or files, and <code>missing_claimed_path</code> remains strict for active sessions. Syncing abandoned sessions requires Better v0.1.0 or later on both peers.</p>
+    </section>
+
     <section aria-labelledby="report">
       <h2 id="report">Report Back</h2>
       <p>End with concrete evidence: session id, checkpoint id, release id if accepted, remote sync result if used, verification commands and outcomes, and any remaining Better signals or risks.</p>

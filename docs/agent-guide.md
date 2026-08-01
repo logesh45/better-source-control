@@ -94,6 +94,14 @@ If compose fails:
 - missing checkpoint: create a checkpoint.
 - broad integration provenance risk: prefer composing worker sessions directly. Use a narrow glue session only for true glue files.
 
+## Session Cleanup
+
+```bash
+better session abandon <session-id> --reason "discarded approach"
+```
+
+Use `abandon` when work is intentionally discarded. Use `supersede` when a checkpointed replacement owns the work, and use `refresh` when continuing stale work from the current frontier. Abandonment releases active claims but preserves the session, checkpoints, operation history, workspace, files, and stored objects for inspection. It does not delete a workspace or files, and `missing_claimed_path` remains strict for active sessions. Syncing abandoned sessions requires Better v0.1.0 or later on both peers.
+
 ## Release Frontier
 
 When compose is clean and the human wants the work accepted:

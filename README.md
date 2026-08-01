@@ -275,6 +275,14 @@ better --json release accept "$release" --by agent:codex
 better restore frontier
 ```
 
+## Session Cleanup
+
+```bash
+better session abandon <session-id> --reason "discarded approach"
+```
+
+Use `abandon` when work is intentionally discarded. Use `supersede` when a checkpointed replacement owns the work, and use `refresh` when continuing stale work from the current frontier. Abandonment releases active claims but preserves the session, checkpoints, operation history, workspace, files, and stored objects for inspection. It does not delete a workspace or files, and `missing_claimed_path` remains strict for active sessions. Syncing abandoned sessions requires Better v0.1.0 or later on both peers. See the [human guide](docs/human-guide.md) and [agent guide](docs/agent-guide.md) for the operating workflow.
+
 ## Native Remote Sync
 
 `better-remote` is the native remote service. It stores Better objects, metadata, and release frontier state.
