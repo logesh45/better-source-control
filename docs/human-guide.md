@@ -32,6 +32,26 @@ better --version
 better-remote --help
 ```
 
+Current stable release: **v0.2.0**.
+
+## Update
+
+For curl-installed binaries:
+
+```bash
+better update --check
+better update
+```
+
+For Homebrew installations:
+
+```bash
+brew update
+brew upgrade better
+```
+
+Better checks the stable release manifest at most once per day after successful eligible commands and prints a short notice when a newer version is available. It never updates automatically. `better update` coordinates a managed daemon handoff and retains backups for rollback. Set `BETTER_UPDATE_CHECK=off` in ephemeral CI or agent containers to disable the periodic check.
+
 ## Add The Agent Skill
 
 Install the Better skill so your coding agent knows how to use Better without searching for instructions:
@@ -188,7 +208,7 @@ Manual downloads should be checked with both checksums and provenance metadata:
 
 ```bash
 shasum -a 256 -c SHA256SUMS
-cat better-0.1.0-aarch64-apple-darwin.provenance.json
+cat better-<version>-<target>.provenance.json
 cat SHA256SUMS.provenance.json
 ```
 

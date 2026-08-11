@@ -84,6 +84,8 @@ better --version
 better-remote --help
 ```
 
+Current stable release: **v0.2.0**. See the [v0.2.0 release](https://github.com/logesh45/better-source-control/releases/tag/v0.2.0) for highlights and downloadable artifacts.
+
 ## Verify Release Integrity
 
 Every release publishes `SHA256SUMS`, `manifest.json`, and provenance JSON files for the platform archives plus release metadata.
@@ -97,7 +99,7 @@ shasum -a 256 -c SHA256SUMS
 Then inspect the provenance file for the artifact you downloaded:
 
 ```bash
-cat better-0.1.0-aarch64-apple-darwin.provenance.json
+cat better-<version>-<target>.provenance.json
 cat SHA256SUMS.provenance.json
 cat manifest.provenance.json
 ```
@@ -116,6 +118,24 @@ brew install logesh45/better-source-control/better
 ### npm
 
 npm packaging is coming soon. Until then, use the curl installer or Homebrew.
+
+### Update
+
+Curl-installed users can check for or install a newer release with:
+
+```bash
+better update --check
+better update
+```
+
+Homebrew users should update through Homebrew:
+
+```bash
+brew update
+brew upgrade better
+```
+
+Release builds check the stable update manifest at most once per day after successful eligible commands. A newer version produces a short notice; Better never installs an update automatically. Managed daemons are handed off during `better update`, with retained binary backups and recovery guidance if the replacement cannot start. Set `BETTER_UPDATE_CHECK=off` in ephemeral CI or agent containers to disable the periodic check.
 
 ## Start A New Better Repo
 
@@ -335,7 +355,7 @@ Better's accepted release frontier is the native source of truth. Git patches an
 
 ## Status
 
-Better is early software. It is ready for experimentation by agent-heavy development teams, but the storage and sync protocol should still be treated as evolving.
+Better v0.2.0 is the current stable release. Its versioned storage and remote protocols are covered by migration, mixed-version, and release-packaging gates on macOS and Linux. The hosted remote service is still forthcoming; `better-remote` is available today for self-hosting.
 
 ## Report Issues
 
