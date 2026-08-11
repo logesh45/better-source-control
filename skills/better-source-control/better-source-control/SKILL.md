@@ -18,6 +18,8 @@ better changes
 better --json context --task "short task" --file path/to/file --symbol SymbolName
 ```
 
+Default `better --json status` is live coordination. Use `--all --limit <n>` with `pagination.sessions.next_after` for historical session inventory; use `better history log --limit <n>` for chronology. `coordination_clear` still requires `better compose` before release.
+
 Inspect `context` matches before duplicating work. `reuse_or_inspect` means inspect the checkpoint/replacement session first; `coordinate` means related active work exists.
 
 For a new native repo, run `better init`. To migrate an existing Git repo:
@@ -125,6 +127,10 @@ better update
 ```
 
 Homebrew users should run `brew upgrade better`.
+
+Managed daemon handoff during `better update` is automatic when Better can classify the repository daemon as managed. `better update --check`, `better update --dry-run`, and `better --version` do no daemon lifecycle work. The first upgrade from legacy `v0.1.2` may fail closed and emit an exact `better daemon run` recovery command.
+
+Preserved `v0.1.2` must update before sync against current remotes. Migrated repositories reject old binaries locally before network access once the concise-status schema v2 migration ships.
 
 ## Report Back
 

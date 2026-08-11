@@ -147,7 +147,7 @@ Apply or commit the exported change in your Git workflow as needed.
 
 `better-remote` stores Better objects, metadata, and frontier state.
 
-Start a local remote:
+Start a local remote on loopback (no auth token required; recommended for CLI sync):
 
 ```bash
 better-remote --bind 127.0.0.1:8787 --storage-root .better-remote
@@ -163,10 +163,21 @@ better sync pull
 
 If push reports that the remote frontier advanced, pull first and reconcile instead of overwriting the remote.
 
-Docker Compose is also available:
+Protected remotes accept a repository credential through an environment-variable reference. The secret stays out of `.better/remotes/*.toml`:
 
 ```bash
+export BETTER_REPO_TOKEN="$(openssl rand -hex 32)"
+better remote init local --url http://127.0.0.1:8787 \
+  --repo-id repo-example --credential-env BETTER_REPO_TOKEN
+better sync push
+```
+
+On the server, `BETTER_REMOTE_CREDENTIALS_DIR` may contain owner-only `<repo-id>.token` files. The validated repository id selects the token before request bodies or repository storage are accessed. `BETTER_REMOTE_AUTH_TOKEN` remains the compatibility fallback. Non-loopback binds require one of these authentication sources. Docker Compose uses the fallback:
+
+```bash
+export BETTER_REMOTE_AUTH_TOKEN="$BETTER_REPO_TOKEN"
 docker compose up -d --build
+curl http://127.0.0.1:8787/health
 ```
 
 See [docker/README.md](../docker/README.md).

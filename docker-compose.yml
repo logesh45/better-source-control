@@ -1,12 +1,18 @@
+# Container binds 0.0.0.0:8787 (non-loopback). BETTER_REMOTE_AUTH_TOKEN is required
+# at startup. Protected routes expect Authorization: Bearer <token>.
+# Configure the CLI with --credential-env so the token is read from the
+# environment instead of being written into repository metadata. See docker/README.md.
 services:
   better-remote:
     build:
       context: .
       dockerfile: docker/Dockerfile
       args:
-        BETTER_VERSION: ${BETTER_VERSION:-0.1.2}
+        BETTER_VERSION: ${BETTER_VERSION:-0.2.0}
         BETTER_TARGET: ${BETTER_TARGET:-}
-    image: better-source-control/better-remote:${BETTER_VERSION:-0.1.2}
+    image: better-source-control/better-remote:${BETTER_VERSION:-0.2.0}
+    environment:
+      BETTER_REMOTE_AUTH_TOKEN: ${BETTER_REMOTE_AUTH_TOKEN:?set BETTER_REMOTE_AUTH_TOKEN for non-loopback Docker bind}
     ports:
       - "${BETTER_REMOTE_PORT:-8787}:8787"
     volumes:

@@ -1,6 +1,6 @@
 FROM debian:bookworm-slim
 
-ARG BETTER_VERSION=0.1.2
+ARG BETTER_VERSION=0.2.0
 ARG BETTER_TARGET
 ARG BETTER_RELEASE_BASE_URL=https://github.com/logesh45/better-source-control/releases/download
 ARG TARGETARCH
@@ -38,5 +38,6 @@ USER better
 EXPOSE 8787
 VOLUME ["/var/lib/better-remote"]
 
+# Non-loopback bind: set BETTER_REMOTE_AUTH_TOKEN or startup fails. See docker/README.md.
 ENTRYPOINT ["better-remote"]
 CMD ["--bind", "0.0.0.0:8787", "--storage-root", "/var/lib/better-remote"]
