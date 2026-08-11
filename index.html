@@ -58,7 +58,7 @@
           "name": "Better",
           "applicationCategory": "DeveloperApplication",
           "operatingSystem": "macOS, Linux",
-          "softwareVersion": "0.1.0",
+          "softwareVersion": "0.2.0",
           "description": "Agent-native source control with sessions, checkpoints, context lookup, compose checks, release frontiers, and Git import/export.",
           "url": "https://betterforagents.com/",
           "downloadUrl": "https://github.com/logesh45/better-source-control/releases/latest",
@@ -314,6 +314,23 @@
       border-color: var(--line);
       background: rgba(255, 255, 255, 0.7);
       color: var(--ink);
+    }
+
+    .release-link {
+      margin: 1.15rem 0 0;
+      font-size: 0.95rem;
+    }
+
+    .release-link a {
+      display: inline-flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      color: var(--ink);
+    }
+
+    .release-link span {
+      color: var(--blue);
+      font-weight: 700;
     }
 
     .hero-note {
@@ -1092,6 +1109,12 @@
             <a class="button primary" href="#install">Install Better</a>
             <a class="button secondary" href="skills/better-source-control/SKILL.md">Agents read the skill</a>
           </div>
+          <p class="release-link">
+            <a href="https://github.com/logesh45/better-source-control/releases/tag/v0.2.0">
+              <strong>Better v0.2.0 is available</strong>
+              <span>See what is new &rarr;</span>
+            </a>
+          </p>
           <div class="hero-note" aria-label="Core concepts">
             <span>Git import</span>
             <span>Agent sessions</span>
@@ -1318,6 +1341,7 @@
             <h3>Curl installer</h3>
             <p>Installs <code>better</code> and <code>better-remote</code> into <code>$HOME/.local/bin</code> by default. Add the PATH export only if the installer says your shell cannot see that directory.</p>
 <pre>curl -fsSL https://raw.githubusercontent.com/logesh45/better-source-control/main/install.sh | bash</pre>
+            <p>Already installed? Run <code>better update</code>.</p>
           </article>
 
           <article class="install-card">
@@ -1326,6 +1350,7 @@
 <pre>brew tap logesh45/better-source-control https://github.com/logesh45/better-source-control
 
 brew install logesh45/better-source-control/better</pre>
+            <p>Already installed? Run <code>brew update</code>, then <code>brew upgrade better</code>.</p>
           </article>
         </div>
       </div>
