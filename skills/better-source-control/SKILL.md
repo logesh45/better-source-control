@@ -45,6 +45,8 @@ better --json workspace status --session "$session"
 better --json checkpoint --session "$session" --workspace --message "what changed"
 ```
 
+By default, `workspace_cleanup = "on_release_accept"` reclaims a clean, exact-pinned workspace after local release acceptance. Stop writing before acceptance. Uncheckpointed source changes and unverifiable state are preserved; ignored files are removed with an otherwise eligible workspace, so keep valuable `.env`-style files outside the workspace. Set top-level `workspace_cleanup = "off"` in `.better/policy.toml` to opt out. Use `better workspace gc --dry-run` to preview cleanup, `better workspace gc` to reclaim eligible workspaces or retry residue, and `better doctor` to inspect remaining cleanup issues.
+
 Optional shell helper if `jq` is available: append `| jq -r '.id'` to the session start command.
 
 For main-checkout edits, skip `--workspace` and run:

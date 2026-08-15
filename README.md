@@ -29,6 +29,8 @@ Better gives agents source-control primitives designed for that world:
 - accepted release frontiers
 - Git import/export when you need compatibility
 
+Completed isolated workspaces are reclaimed after local release acceptance, keeping projects tidy while preserving uncheckpointed source changes. Agents should stop writing before acceptance. Non-ignored changes and unverifiable workspace state are preserved; ignored files are removed with an otherwise eligible workspace, so valuable `.env`-style files should not live only in a workspace. Set the top-level `workspace_cleanup = "off"` key in `.better/policy.toml` before any signal tables to opt out. You can preview cleanup with `better workspace gc --dry-run` and run it explicitly with `better workspace gc`.
+
 ## Built For Parallel Subagents
 
 The core difference is that Better lets agents ask source control for context before they duplicate work:
@@ -84,7 +86,7 @@ better --version
 better-remote --help
 ```
 
-Current stable release: **v0.2.0**. See the [v0.2.0 release](https://github.com/logesh45/better-source-control/releases/tag/v0.2.0) for highlights and downloadable artifacts.
+Current stable release: **v0.3.0**. See the [v0.3.0 release](https://github.com/logesh45/better-source-control/releases/tag/v0.3.0) for highlights and downloadable artifacts.
 
 ## Verify Release Integrity
 
@@ -355,7 +357,7 @@ Better's accepted release frontier is the native source of truth. Git patches an
 
 ## Status
 
-Better v0.2.0 is the current stable release. Its versioned storage and remote protocols are covered by migration, mixed-version, and release-packaging gates on macOS and Linux. The hosted remote service is still forthcoming; `better-remote` is available today for self-hosting.
+Better v0.3.0 is the current stable release. It automatically reclaims clean completed workspaces while preserving changed or uncertain work, and its release artifacts are covered by migration, mixed-version, and packaging gates on macOS and Linux. The hosted remote service is still forthcoming; `better-remote` is available today for self-hosting.
 
 ## Report Issues
 

@@ -56,6 +56,8 @@ Check workspace changes:
 better --json workspace status --session <session-id>
 ```
 
+After local release acceptance, Better automatically reclaims each completed isolated workspace that is clean and exact-pinned by default. Stop writing before acceptance. Uncheckpointed source changes and unverifiable state are preserved, but ignored files are removed with an otherwise eligible workspace; keep valuable `.env`-style files outside the workspace. Set `workspace_cleanup = "off"` at the top level of `.better/policy.toml` to opt out. Use `better workspace gc --dry-run` to preview candidates and `better workspace gc` to reclaim them or retry cleanup residue.
+
 Checkpoint workspace work:
 
 ```bash

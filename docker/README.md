@@ -59,7 +59,7 @@ BETTER_TARGET=aarch64-unknown-linux-gnu docker compose up -d --build
 ## Configuration
 
 ```bash
-BETTER_VERSION=0.2.0
+BETTER_VERSION=0.3.0
 BETTER_TARGET=
 BETTER_REMOTE_PORT=8787
 BETTER_REMOTE_AUTH_TOKEN=   # required for the container's 0.0.0.0 bind

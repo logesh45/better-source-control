@@ -1,6 +1,6 @@
 FROM debian:bookworm-slim
 
-ARG BETTER_VERSION=0.2.0
+ARG BETTER_VERSION=0.3.0
 ARG BETTER_TARGET
 ARG BETTER_RELEASE_BASE_URL=https://github.com/logesh45/better-source-control/releases/download
 ARG TARGETARCH

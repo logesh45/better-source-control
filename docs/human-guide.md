@@ -32,7 +32,7 @@ better --version
 better-remote --help
 ```
 
-Current stable release: **v0.2.0**.
+Current stable release: **v0.3.0**.
 
 ## Update
 
@@ -127,6 +127,12 @@ better restore frontier
 ```
 
 `better restore frontier` updates the checkout to match the accepted Better frontier.
+
+## Workspace Cleanup
+
+Better reclaims completed isolated workspaces after local release acceptance, so parallel work does not leave stale copies behind. Uncheckpointed source changes and other non-ignored drift are preserved. Ignored files are removed when a workspace is otherwise eligible, so keep valuable `.env`-style files outside the workspace or in another durable location.
+
+Agents should stop writing before acceptance. Cleanup is enabled by default; set `workspace_cleanup = "off"` at the top level of `.better/policy.toml` when a project needs to retain every workspace. To inspect storage without changing it, run `better workspace gc --dry-run`; to reclaim eligible workspaces and retry residue, run `better workspace gc`. `better doctor` reports cleanup residue that still needs attention.
 
 ## Session Cleanup
 
