@@ -1,4 +1,4 @@
-FROM debian:bookworm-slim
+FROM ubuntu:24.04
 
 ARG BETTER_VERSION=0.3.0
 ARG BETTER_TARGET
@@ -32,7 +32,9 @@ RUN target="${BETTER_TARGET:-}" \
   && install -m 0755 "$better_remote_src" /usr/local/bin/better-remote \
   && rm -rf "/tmp/${artifact}" /tmp/SHA256SUMS /tmp/better.sha256 /tmp/better-*
 
-RUN useradd --create-home --shell /usr/sbin/nologin better
+RUN useradd --create-home --shell /usr/sbin/nologin better \
+  && mkdir -p /var/lib/better-remote \
+  && chown better:better /var/lib/better-remote
 
 USER better
 EXPOSE 8787
