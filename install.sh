@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-BETTER_VERSION="${BETTER_VERSION:-0.3.0}"
+BETTER_VERSION="${BETTER_VERSION:-0.3.1}"
 BETTER_INSTALL_DIR="${BETTER_INSTALL_DIR:-$HOME/.local/bin}"
 BETTER_GITHUB_RELEASES_URL="${BETTER_GITHUB_RELEASES_URL:-https://github.com/logesh45/better-source-control/releases}"
 
