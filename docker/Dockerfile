@@ -1,6 +1,6 @@
 FROM ubuntu:24.04
 
-ARG BETTER_VERSION=0.3.1
+ARG BETTER_VERSION=0.3.2
 ARG BETTER_TARGET
 ARG BETTER_RELEASE_BASE_URL=https://github.com/logesh45/better-source-control/releases/download
 ARG TARGETARCH

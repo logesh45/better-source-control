@@ -86,7 +86,7 @@ better --version
 better-remote --help
 ```
 
-Current stable release: **v0.3.0**. See the [v0.3.0 release](https://github.com/logesh45/better-source-control/releases/tag/v0.3.0) for highlights and downloadable artifacts.
+Current stable release: **v0.3.2**. See the [v0.3.2 release](https://github.com/logesh45/better-source-control/releases/tag/v0.3.2) for highlights and downloadable artifacts.
 
 ## Verify Release Integrity
 
@@ -357,7 +357,7 @@ Better's accepted release frontier is the native source of truth. Git patches an
 
 ## Status
 
-Better v0.3.0 is the current stable release. It automatically reclaims clean completed workspaces while preserving changed or uncertain work, and its release artifacts are covered by migration, mixed-version, and packaging gates on macOS and Linux. The hosted remote service is still forthcoming; `better-remote` is available today for self-hosting.
+Better v0.3.2 is the current stable release. It includes robust remote synchronization for long semantic metadata paths, and its release artifacts are covered by migration, mixed-version, and packaging gates on macOS and Linux. The hosted remote service is still forthcoming; `better-remote` is available today for self-hosting.
 
 ## Report Issues
 
