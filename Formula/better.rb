@@ -4,16 +4,16 @@ class Better < Formula
 
   if OS.mac? && Hardware::CPU.arm?
     target = "aarch64-apple-darwin"
-    sha = "69cdd69dd714da6b77a04ce7c251c5bbf3b90f5d6ba8ea3bfff5524aae6e3f37"
+    sha = "5c305b5cc6ca87030e44c23cda3490c1c4fbbd511c712ad0dcf15b653ea13328"
   elsif OS.mac?
     target = "x86_64-apple-darwin"
-    sha = "f62669a7a6e31391a2b8a34be5ff2dc9b9386d421a5007a3d3794a6b3b09c5a6"
+    sha = "edd9e59e89650ae7db747a8aa4386664f1384ac44ab2e3f154b666bde9d59d2c"
   elsif OS.linux? && Hardware::CPU.arm?
     target = "aarch64-unknown-linux-gnu"
-    sha = "fe52e9472761070507c594bcb012304bce222bc4a6607c281a05474ef9d2f5c9"
+    sha = "e75b4218609523478a45dbf7b8cc29a3db8b90404f92523c9bd42b7f8856f57b"
   elsif OS.linux?
     target = "x86_64-unknown-linux-gnu"
-    sha = "b8d1c825118f43329d4598fb96e3c7d8b8e679a6de2625bd199fe9125c6b183c"
+    sha = "c835e07c8b98a3b79f800f1b558592f36df2375770121301b6d47c6a5817ec16"
   else
     odie "Unsupported platform for Better"
   end
