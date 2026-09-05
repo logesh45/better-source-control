@@ -86,7 +86,7 @@ better --version
 better-remote --help
 ```
 
-Current stable release: **v0.3.2**. See the [v0.3.2 release](https://github.com/logesh45/better-source-control/releases/tag/v0.3.2) for highlights and downloadable artifacts.
+Current stable release: **v0.3.4**. See the [v0.3.4 release](https://github.com/logesh45/better-source-control/releases/tag/v0.3.4) for highlights and downloadable artifacts.
 
 ## Verify Release Integrity
 

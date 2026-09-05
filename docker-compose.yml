@@ -8,9 +8,9 @@ services:
       context: .
       dockerfile: docker/Dockerfile
       args:
-        BETTER_VERSION: ${BETTER_VERSION:-0.3.2}
+        BETTER_VERSION: ${BETTER_VERSION:-0.3.4}
         BETTER_TARGET: ${BETTER_TARGET:-}
-    image: better-source-control/better-remote:${BETTER_VERSION:-0.3.2}
+    image: better-source-control/better-remote:${BETTER_VERSION:-0.3.4}
     environment:
       BETTER_REMOTE_AUTH_TOKEN: ${BETTER_REMOTE_AUTH_TOKEN:?set BETTER_REMOTE_AUTH_TOKEN for non-loopback Docker bind}
     ports:

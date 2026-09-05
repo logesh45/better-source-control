@@ -32,7 +32,7 @@ better --version
 better-remote --help
 ```
 
-Current stable release: **v0.3.2**.
+Current stable release: **v0.3.4**.
 
 ## Update
 
