@@ -1,6 +1,6 @@
-FROM ubuntu:24.04
+FROM ubuntu:26.04 AS fetch
 
-ARG BETTER_VERSION=0.3.4
+ARG BETTER_VERSION=0.3.5
 ARG BETTER_TARGET
 ARG BETTER_RELEASE_BASE_URL=https://github.com/logesh45/better-source-control/releases/download
 ARG TARGETARCH
@@ -28,15 +28,15 @@ RUN target="${BETTER_TARGET:-}" \
   && better_remote_src="$(find /tmp -type f -path '*/bin/better-remote' | head -n 1)" \
   && test -n "$better_src" \
   && test -n "$better_remote_src" \
-  && install -m 0755 "$better_src" /usr/local/bin/better \
-  && install -m 0755 "$better_remote_src" /usr/local/bin/better-remote \
+  && mkdir -p /out/usr/local/bin /out/var/lib/better-remote \
+  && install -m 0755 "$better_src" /out/usr/local/bin/better \
+  && install -m 0755 "$better_remote_src" /out/usr/local/bin/better-remote \
   && rm -rf "/tmp/${artifact}" /tmp/SHA256SUMS /tmp/better.sha256 /tmp/better-*
 
-RUN useradd --create-home --shell /usr/sbin/nologin better \
-  && mkdir -p /var/lib/better-remote \
-  && chown better:better /var/lib/better-remote
+FROM gcr.io/distroless/cc-debian12:nonroot
 
-USER better
+COPY --from=fetch --chown=65532:65532 /out/ /
+USER 65532:65532
 EXPOSE 8787
 VOLUME ["/var/lib/better-remote"]
 
