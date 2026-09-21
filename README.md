@@ -86,7 +86,7 @@ better --version
 better-remote --help
 ```
 
-Current stable release: **v0.3.4**. See the [v0.3.4 release](https://github.com/logesh45/better-source-control/releases/tag/v0.3.4) for highlights and downloadable artifacts.
+Current stable release: **v0.4.0**. See the [v0.4.0 release](https://github.com/logesh45/better-source-control/releases/tag/v0.4.0) for highlights and downloadable artifacts.
 
 ## Verify Release Integrity
 
@@ -333,7 +333,7 @@ If you want to self-host the remote service in a container, this repository also
 docker compose up -d --build
 ```
 
-By default it starts `better-remote` on `http://127.0.0.1:8787` and stores data in a Docker volume.
+`docker compose up -d --build` is filesystem storage. For local-dev MinIO (better/betterpassword, ports 9000/9001) add `-f docker-compose.minio.yml`. For real AWS S3 add `-f docker-compose.s3.yml` with `BETTER_REMOTE_S3_*` set in the environment.
 To force a specific archive target, set `BETTER_TARGET`, for example:
 
 ```bash
@@ -357,7 +357,7 @@ Better's accepted release frontier is the native source of truth. Git patches an
 
 ## Status
 
-Better v0.3.2 is the current stable release. It includes robust remote synchronization for long semantic metadata paths, and its release artifacts are covered by migration, mixed-version, and packaging gates on macOS and Linux. The hosted remote service is still forthcoming; `better-remote` is available today for self-hosting.
+Better v0.4.0 is the current stable release. Self-hosted `better-remote` can use filesystem storage or an S3-compatible object store, with Compose examples for local MinIO and external S3. The hosted remote service is still forthcoming.
 
 ## Report Issues
 

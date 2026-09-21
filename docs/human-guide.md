@@ -32,7 +32,7 @@ better --version
 better-remote --help
 ```
 
-Current stable release: **v0.3.4**.
+Current stable release: **v0.4.0**.
 
 ## Update
 
@@ -206,7 +206,7 @@ docker compose up -d --build
 curl http://127.0.0.1:8787/health
 ```
 
-See [docker/README.md](../docker/README.md).
+`docker compose up` is filesystem storage. Add `-f docker-compose.minio.yml` for local-dev MinIO, or `-f docker-compose.s3.yml` with `BETTER_REMOTE_S3_*` for real S3. See [docker/README.md](../docker/README.md).
 
 ## Verify Downloads
 

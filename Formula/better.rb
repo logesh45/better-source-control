@@ -4,23 +4,23 @@ class Better < Formula
 
   if OS.mac? && Hardware::CPU.arm?
     target = "aarch64-apple-darwin"
-    sha = "07294d31c4af4366bad60d14d6b7509abb71973efcd8bfc28b5f824d91d7c7da"
+    sha = "44549363055e25fbf7451860879f90e423b2ebf2e14ae7b12db7e9e4cbdd0d42"
   elsif OS.mac?
     target = "x86_64-apple-darwin"
-    sha = "7b6b00f7a0ea5b2423ac0d132bfd3b2ab7ca55bb77736eff3ff802d680283635"
+    sha = "59e01d0fe3f258c5b8ce4a7aba56fb95e361a3518b834b9fc9827ff27ec4ecc8"
   elsif OS.linux? && Hardware::CPU.arm?
     target = "aarch64-unknown-linux-gnu"
-    sha = "2f99031b82d22239d45fbfad4cd279c4d06680a63f92f60651c73e744f1db5c8"
+    sha = "b79bba40072bd783ab9a60eb28d931f957b3894806b52e08f2449432fd99c83e"
   elsif OS.linux?
     target = "x86_64-unknown-linux-gnu"
-    sha = "2218c97d89cc164f2d7804e3cd16d1a61d8d4814d444689a20dcfcedbc9bf85b"
+    sha = "b2a1f829a31c3242191983b80245fb09eb57931c5864996332cafd0a15c6008d"
   else
     odie "Unsupported platform for Better"
   end
 
-  url "https://github.com/logesh45/better-source-control/releases/download/v0.3.5/better-0.3.5-#{target}.tar.gz"
+  url "https://github.com/logesh45/better-source-control/releases/download/v0.4.0/better-0.4.0-#{target}.tar.gz"
   sha256 sha
-  license "MIT"
+  license any_of: ["MIT", "Apache-2.0"]
 
   def install
     bin.install "bin/better"

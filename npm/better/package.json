@@ -1,8 +1,8 @@
 {
   "name": "@better-scm/better",
-  "version": "0.3.5",
+  "version": "0.4.0",
   "description": "Agent-native source control for high-parallelism software work.",
-  "license": "MIT",
+  "license": "MIT OR Apache-2.0",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/logesh45/better-source-control.git"
@@ -14,11 +14,11 @@
     "postinstall": "node scripts/postinstall.js"
   },
   "optionalDependencies": {
-    "@better-scm/better-darwin-arm64": "0.3.5",
-    "@better-scm/better-darwin-x64": "0.3.5",
-    "@better-scm/better-linux-arm64": "0.3.5",
-    "@better-scm/better-linux-x64": "0.3.5",
-    "@better-scm/better-win32-x64": "0.3.5"
+    "@better-scm/better-darwin-arm64": "0.4.0",
+    "@better-scm/better-darwin-x64": "0.4.0",
+    "@better-scm/better-linux-arm64": "0.4.0",
+    "@better-scm/better-linux-x64": "0.4.0",
+    "@better-scm/better-win32-x64": "0.4.0"
   },
   "engines": {
     "node": ">=18"

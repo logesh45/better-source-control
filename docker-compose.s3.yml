@@ -1,0 +1,17 @@
+# External S3 overlay (real AWS S3 or another S3-compatible endpoint).
+# Does not start MinIO. Set the BETTER_REMOTE_S3_* host variables first:
+#
+#   docker compose -f docker-compose.yml -f docker-compose.s3.yml up -d --build
+#
+# Omit BETTER_REMOTE_S3_ENDPOINT to use the default AWS endpoint.
+# PATH_STYLE defaults to false (virtual-hosted-style AWS). Use true for
+# path-style compatible endpoints.
+services:
+  better-remote:
+    environment:
+      BETTER_REMOTE_S3_ENDPOINT: ${BETTER_REMOTE_S3_ENDPOINT:-}
+      BETTER_REMOTE_S3_BUCKET: ${BETTER_REMOTE_S3_BUCKET:?set BETTER_REMOTE_S3_BUCKET}
+      BETTER_REMOTE_S3_REGION: ${BETTER_REMOTE_S3_REGION:-us-east-1}
+      BETTER_REMOTE_S3_ACCESS_KEY: ${BETTER_REMOTE_S3_ACCESS_KEY:?set BETTER_REMOTE_S3_ACCESS_KEY}
+      BETTER_REMOTE_S3_SECRET_KEY: ${BETTER_REMOTE_S3_SECRET_KEY:?set BETTER_REMOTE_S3_SECRET_KEY}
+      BETTER_REMOTE_S3_PATH_STYLE: ${BETTER_REMOTE_S3_PATH_STYLE:-false}

@@ -62,8 +62,11 @@ better sync pull</code></pre>
 
     <section aria-labelledby="docker">
       <h2 id="docker">Docker Compose</h2>
-      <p>The release repository also includes a Docker Compose setup for the remote service:</p>
-      <pre><code>docker compose up -d --build</code></pre>
+      <p>The release repository includes Compose files for three storage modes. Filesystem is <code>docker compose up -d --build</code>. Local-dev MinIO adds <code>-f docker-compose.minio.yml</code>. Real AWS S3 adds <code>-f docker-compose.s3.yml</code> with <code>BETTER_REMOTE_S3_*</code> set. Loopback without Compose still uses <code>--storage-root</code>.</p>
+      <pre><code>docker compose up -d --build
+docker compose -f docker-compose.yml -f docker-compose.minio.yml up -d --build
+docker compose -f docker-compose.yml -f docker-compose.s3.yml up -d --build</code></pre>
+      <p>See <code>docker/README.md</code> for authentication, the local-dev MinIO credentials, and S3 variables.</p>
     </section>
 
     <section aria-labelledby="coordination">

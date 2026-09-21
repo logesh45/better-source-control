@@ -20,7 +20,7 @@ class Better < Formula
 
   url "__BASE_URL__/better-__VERSION__-#{target}.tar.gz"
   sha256 sha
-  license "MIT"
+  license any_of: ["MIT", "Apache-2.0"]
 
   def install
     bin.install "bin/better"

@@ -2,17 +2,24 @@
 # at startup. Protected routes expect Authorization: Bearer <token>.
 # Configure the CLI with --credential-env so the token is read from the
 # environment instead of being written into repository metadata. See docker/README.md.
+#
+# This file is filesystem storage (BETTER_REMOTE_STORAGE / --storage-root).
+# Local-dev MinIO (better/betterpassword, host ports 9000/9001):
+#   docker compose -f docker-compose.yml -f docker-compose.minio.yml up -d --build
+# External S3:
+#   docker compose -f docker-compose.yml -f docker-compose.s3.yml up -d --build
 services:
   better-remote:
     build:
       context: .
       dockerfile: docker/Dockerfile
       args:
-        BETTER_VERSION: ${BETTER_VERSION:-0.3.5}
+        BETTER_VERSION: ${BETTER_VERSION:-0.4.0}
         BETTER_TARGET: ${BETTER_TARGET:-}
-    image: better-source-control/better-remote:${BETTER_VERSION:-0.3.5}
+    image: better-source-control/better-remote:${BETTER_VERSION:-0.4.0}
     environment:
       BETTER_REMOTE_AUTH_TOKEN: ${BETTER_REMOTE_AUTH_TOKEN:?set BETTER_REMOTE_AUTH_TOKEN for non-loopback Docker bind}
+      BETTER_REMOTE_STORAGE: /var/lib/better-remote
     ports:
       - "${BETTER_REMOTE_PORT:-8787}:8787"
     volumes:
