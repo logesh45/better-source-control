@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-BETTER_VERSION="${BETTER_VERSION:-0.4.0}"
+BETTER_VERSION="${BETTER_VERSION:-0.5.0}"
 BETTER_INSTALL_DIR="${BETTER_INSTALL_DIR:-$HOME/.local/bin}"
 BETTER_GITHUB_RELEASES_URL="${BETTER_GITHUB_RELEASES_URL:-https://github.com/logesh45/better-source-control/releases}"
 
@@ -55,6 +55,7 @@ fetch() {
       cp "$src" "$dest"
       ;;
     http://* | https://*)
+      need curl
       curl --fail --location --silent --show-error "$url" --output "$dest"
       ;;
     *)
@@ -83,6 +84,7 @@ manifest_value() {
 
 need awk
 need cp
+need grep
 need mkdir
 need sed
 need tar

@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Better Agent Guide</title>
-  <meta name="description" content="A practical Better workflow for coding agents: inspect context, start sessions, checkpoint work, compose, and report verification.">
+  <meta name="description" content="The Better agent work loop lives in the better-source-control skill. This page points agents there instead of duplicating commands.">
   <link rel="canonical" href="https://betterforagents.com/agent-guide/">
   <meta name="theme-color" content="#f7f8f5">
   <style>
@@ -43,50 +43,13 @@
   </header>
   <main class="shell">
     <h1>Agent workflow for Better.</h1>
-    <p class="lead">Use Better as the native source-control system for agent work. Git is only a bridge for import, export, or publishing when the human asks for it.</p>
+    <p class="lead">The canonical agent work loop is the <code>better-source-control</code> skill, not this page. Git remains a bridge for import, export, or publishing when the human asks for it.</p>
 
-    <section aria-labelledby="first-checks">
-      <h2 id="first-checks">First Checks</h2>
-      <p>Before editing, inspect the current Better state and prior related work:</p>
-      <pre><code>better --json status
-better --json release status
-better changes
-better --json context --task "short task description" --file path/to/file --symbol SymbolName</code></pre>
-      <p class="note">If context returns <code>reuse_or_inspect</code>, inspect the referenced checkpoint or replacement session before duplicating work. If it returns <code>coordinate</code>, related active work exists.</p>
-    </section>
-
-    <section aria-labelledby="session">
-      <h2 id="session">Start A Session</h2>
-      <p>Create a session with a clear task and accurate file claims:</p>
-      <pre><code>better --json session start \
-  --task "short task description" \
-  --owner agent:&lt;name&gt; \
-  --file path/to/file</code></pre>
-      <p>If you later touch another file, update the claim before checkpointing:</p>
-      <pre><code>better session update &lt;session-id&gt; --file path/to/other-file</code></pre>
-    </section>
-
-    <section aria-labelledby="checkpoint">
-      <h2 id="checkpoint">Checkpoint And Compose</h2>
-      <p>Prefer Better workspaces for isolated parallel work, then checkpoint the workspace:</p>
-      <pre><code>better workspace create --session &lt;session-id&gt;
-better --json workspace status --session &lt;session-id&gt;
-better --json checkpoint --session &lt;session-id&gt; --workspace --message "what changed"</code></pre>
-      <p>Before integration, run the required project checks and inspect composition:</p>
-      <pre><code>better --json status
-better compose --json</code></pre>
-    </section>
-
-    <section aria-labelledby="session-cleanup">
-      <h2 id="session-cleanup">Session Cleanup</h2>
-      <pre><code>better session abandon &lt;session-id&gt; --reason "discarded approach"</code></pre>
-      <p>Use <code>abandon</code> when work is intentionally discarded. Use <code>supersede</code> when a checkpointed replacement owns the work, and use <code>refresh</code> when continuing stale work from the current frontier.</p>
-      <p>Abandonment releases active claims but preserves the session, checkpoints, operation history, workspace, files, and stored objects for inspection. It does not delete a workspace or files, and <code>missing_claimed_path</code> remains strict for active sessions. Syncing abandoned sessions requires Better v0.1.0 or later on both peers.</p>
-    </section>
-
-    <section aria-labelledby="report">
-      <h2 id="report">Report Back</h2>
-      <p>End with concrete evidence: session id, checkpoint id, release id if accepted, remote sync result if used, verification commands and outcomes, and any remaining Better signals or risks.</p>
+    <section aria-labelledby="follow-the-skill">
+      <h2 id="follow-the-skill">Follow The Skill</h2>
+      <p>Install the skill, then follow <code>skills/better-source-control/SKILL.md</code> for status, context, sessions, workspaces, checkpoints, compose, release, remotes, and session cleanup.</p>
+      <pre><code>npx skills add logesh45/better-source-control</code></pre>
+      <p class="note">See the <a href="/skill/">skill install page</a> and the <a href="/docs/agent-guide.md">markdown agent guide</a>. If a repository includes <code>AGENTS.md</code>, follow it for repo-specific Git parity or verification; the skill remains the shared Better loop.</p>
     </section>
   </main>
   <footer class="shell">

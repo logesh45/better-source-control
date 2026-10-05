@@ -13,7 +13,7 @@ Git stays useful as the migration and publishing bridge. Better becomes the coor
 Start here depending on who is doing the work:
 
 - [Human guide](docs/human-guide.md): install Better, initialize a project, understand the workflow, and operate remotes.
-- [Agent guide](docs/agent-guide.md): the practical command loop agents should follow after the skill is installed.
+- [Agent guide](docs/agent-guide.md): points agents at the Better skill (and repo `AGENTS.md` when present) instead of duplicating the command loop.
 
 ## Why Better?
 
@@ -79,6 +79,14 @@ curl -fsSL https://raw.githubusercontent.com/logesh45/better-source-control/main
 
 The installer places `better` and `better-remote` in `$HOME/.local/bin` by default. If that directory is not on your `PATH`, the installer prints the export command to add it. It does not modify your shell startup files.
 
+On Windows, use the PowerShell installer:
+
+```powershell
+irm https://raw.githubusercontent.com/logesh45/better-source-control/main/install.ps1 | iex
+```
+
+The installer places `better.exe` and `better-remote.exe` in `%USERPROFILE%\.local\bin` by default. If that directory is not on your `PATH`, the installer prints the directory to add, then restart the terminal.
+
 Verify the install:
 
 ```bash
@@ -86,7 +94,7 @@ better --version
 better-remote --help
 ```
 
-Current stable release: **v0.4.0**. See the [v0.4.0 release](https://github.com/logesh45/better-source-control/releases/tag/v0.4.0) for highlights and downloadable artifacts.
+Current stable release: **v0.5.0**. See the [v0.5.0 release](https://github.com/logesh45/better-source-control/releases/tag/v0.5.0) for highlights and downloadable artifacts.
 
 ## Verify Release Integrity
 
@@ -254,56 +262,13 @@ Use the better-source-control skill. Use Better sessions, checkpoints, context, 
 
 ## Agent Workflow
 
-Before editing, agents should inspect current Better state and look for prior related work:
+The canonical agent work loop is the Better skill, not this README:
 
-```bash
-better --json status
-better changes
-better --json context --task "describe the task" --file path/to/file.rs --symbol SymbolName
+```text
+skills/better-source-control/SKILL.md
 ```
 
-Start a session and claim the files you expect to touch:
-
-```bash
-better --json session start \
-  --task "describe the task" \
-  --owner agent:codex \
-  --file path/to/file.rs
-session=<returned-session-id>
-```
-
-Use a native Better workspace for isolated parallel work:
-
-```bash
-better workspace create --session "$session"
-# edit under .better/workspaces/$session/
-better --json workspace status --session "$session"
-better --json checkpoint --session "$session" --workspace --message "checkpoint message"
-```
-
-Check whether active sessions can compose:
-
-```bash
-better --json status
-better compose --json
-```
-
-Accept the next release frontier:
-
-```bash
-better --json release propose --message "release message"
-release=<returned-release-id>
-better --json release accept "$release" --by agent:codex
-better restore frontier
-```
-
-## Session Cleanup
-
-```bash
-better session abandon <session-id> --reason "discarded approach"
-```
-
-Use `abandon` when work is intentionally discarded. Use `supersede` when a checkpointed replacement owns the work, and use `refresh` when continuing stale work from the current frontier. Abandonment releases active claims but preserves the session, checkpoints, operation history, workspace, files, and stored objects for inspection. It does not delete a workspace or files, and `missing_claimed_path` remains strict for active sessions. Syncing abandoned sessions requires Better v0.1.0 or later on both peers. See the [human guide](docs/human-guide.md) and [agent guide](docs/agent-guide.md) for the operating workflow.
+Install that skill, then follow it for status, context, sessions, workspaces, checkpoints, compose, release, remotes, and session cleanup. If a repository includes `AGENTS.md`, follow it for repo-specific Git parity or verification; the skill remains the shared Better loop. See the [agent guide](docs/agent-guide.md) for the public pointer and the [human guide](docs/human-guide.md) for install, review, remotes, and SeaweedFS/S3.
 
 ## Native Remote Sync
 
@@ -333,7 +298,7 @@ If you want to self-host the remote service in a container, this repository also
 docker compose up -d --build
 ```
 
-`docker compose up -d --build` is filesystem storage. For local-dev MinIO (better/betterpassword, ports 9000/9001) add `-f docker-compose.minio.yml`. For real AWS S3 add `-f docker-compose.s3.yml` with `BETTER_REMOTE_S3_*` set in the environment.
+`docker compose up -d --build` is filesystem storage. For single-node SeaweedFS S3 storage, set `SEAWEEDFS_ACCESS_KEY` and `SEAWEEDFS_SECRET_KEY`, then add `-f docker-compose.seaweedfs.yml`. See [setup, backups, and migration](docker/README.md#single-node-seaweedfs). For external S3 add `-f docker-compose.s3.yml` with `BETTER_REMOTE_S3_*` set.
 To force a specific archive target, set `BETTER_TARGET`, for example:
 
 ```bash
@@ -357,7 +322,7 @@ Better's accepted release frontier is the native source of truth. Git patches an
 
 ## Status
 
-Better v0.4.0 is the current stable release. Self-hosted `better-remote` can use filesystem storage or an S3-compatible object store, with Compose examples for local MinIO and external S3. The hosted remote service is still forthcoming.
+Better v0.5.0 is the current stable release. Self-hosted `better-remote` can use filesystem storage or an S3-compatible object store, with Compose examples for local SeaweedFS and external S3. The hosted remote service is still forthcoming.
 
 ## Report Issues
 
@@ -377,4 +342,4 @@ Useful reports include:
 
 ## License
 
-Better is released under the MIT License.
+Better is dual-licensed under MIT OR Apache-2.0.

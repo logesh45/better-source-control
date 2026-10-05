@@ -62,11 +62,11 @@ better sync pull</code></pre>
 
     <section aria-labelledby="docker">
       <h2 id="docker">Docker Compose</h2>
-      <p>The release repository includes Compose files for three storage modes. Filesystem is <code>docker compose up -d --build</code>. Local-dev MinIO adds <code>-f docker-compose.minio.yml</code>. Real AWS S3 adds <code>-f docker-compose.s3.yml</code> with <code>BETTER_REMOTE_S3_*</code> set. Loopback without Compose still uses <code>--storage-root</code>.</p>
+      <p>The release repository includes three storage modes. Filesystem is <code>docker compose up -d --build</code>. Single-node SeaweedFS adds <code>-f docker-compose.seaweedfs.yml</code> with <code>SEAWEEDFS_ACCESS_KEY</code> and <code>SEAWEEDFS_SECRET_KEY</code> set. External S3 adds <code>-f docker-compose.s3.yml</code> with <code>BETTER_REMOTE_S3_*</code> set. Loopback without Compose still uses <code>--storage-root</code>.</p>
       <pre><code>docker compose up -d --build
-docker compose -f docker-compose.yml -f docker-compose.minio.yml up -d --build
+docker compose -f docker-compose.yml -f docker-compose.seaweedfs.yml up -d --build
 docker compose -f docker-compose.yml -f docker-compose.s3.yml up -d --build</code></pre>
-      <p>See <code>docker/README.md</code> for authentication, the local-dev MinIO credentials, and S3 variables.</p>
+      <p>See <a href="https://github.com/logesh45/better-source-control/blob/main/docker/README.md">the self-hosting guide</a> for authentication, backups, single-node limits, and migration from MinIO. Existing MinIO volumes are not automatically migrated.</p>
     </section>
 
     <section aria-labelledby="coordination">

@@ -8,8 +8,7 @@ const nativePackages = {
   "darwin-arm64": { packageName: "@better-scm/better-darwin-arm64", binary: "better" },
   "darwin-x64": { packageName: "@better-scm/better-darwin-x64", binary: "better" },
   "linux-arm64": { packageName: "@better-scm/better-linux-arm64", binary: "better" },
-  "linux-x64": { packageName: "@better-scm/better-linux-x64", binary: "better" },
-  "win32-x64": { packageName: "@better-scm/better-win32-x64", binary: "better.exe" }
+  "linux-x64": { packageName: "@better-scm/better-linux-x64", binary: "better" }
 };
 
 function resolvePaths() {

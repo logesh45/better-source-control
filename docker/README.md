@@ -5,7 +5,7 @@ It downloads the published Better release tarball, installs `better` and
 `better-remote`, and starts the remote service. Compose has three real modes:
 
 - Filesystem: `docker compose up -d --build` (this directory's `docker-compose.yml`)
-- Local-dev MinIO: add `docker-compose.minio.yml`
+- Single-node SeaweedFS: add `docker-compose.seaweedfs.yml`
 - External S3: add `docker-compose.s3.yml`
 
 `BETTER_REMOTE_STORAGE` is the object store in filesystem mode and the process
@@ -53,25 +53,56 @@ For repository-specific server credentials, create an owner-only file named
 `BETTER_REMOTE_CREDENTIALS_DIR` to the mounted path. The packaged Compose file
 uses `BETTER_REMOTE_AUTH_TOKEN` as a simpler compatibility fallback.
 
-## Local-dev MinIO
+## Single-node SeaweedFS
 
-This is a local-dev overlay, not a production self-host default. It uses
-`better` / `betterpassword` and publishes host ports `9000` (S3 API) and
-`9001` (console). Override `MINIO_ROOT_USER` and `MINIO_ROOT_PASSWORD`.
+SeaweedFS 4.48 is pinned by version and immutable image digest. It is
+Apache-2.0 licensed and runs its master, volume server, filer, and S3 gateway
+in one process. This is a small self-hosted deployment, **not** an HA cluster.
+For larger deployments, use a separately operated distributed S3 service
+with the external S3 overlay.
 
 ```bash
 export BETTER_REMOTE_AUTH_TOKEN="$BETTER_REPO_TOKEN"
-docker compose -f docker-compose.yml -f docker-compose.minio.yml up -d --build
+export SEAWEEDFS_ACCESS_KEY="better-$(openssl rand -hex 8)"
+export SEAWEEDFS_SECRET_KEY="$(openssl rand -hex 32)"
+docker compose -f docker-compose.yml -f docker-compose.seaweedfs.yml up -d --build
 ```
 
-The overlay is the only Compose file that pins the MinIO image
-(`release-repo/docker-compose.minio.yml`). The developer checkout includes that
-same file from `docker-compose.remote.yml`.
+Keep credentials in a protected environment file or secret manager and reuse
+them after restarts. They bootstrap SeaweedFS identities; changing environment
+variables is not a documented credential-rotation mechanism.
+Only S3 port `127.0.0.1:8333` is published. Master/filer ports stay on the
+Compose network. Do not expose those internal unauthenticated services.
+Unused WebDAV, Admin UI, Iceberg, and Lance interfaces are disabled.
+For remote access, put Better behind a TLS reverse proxy; don't expose S3
+unless a trusted client needs it.
+
+The named `better-seaweedfs-data` volume persists storage. Back up it **and**
+`better-remote-data` while both services are stopped, and test restores.
+`docker compose down` preserves volumes; `down --volumes` destroys them.
+A single disk/host failure is not covered by replication.
+
+### Existing MinIO users
+
+`docker-compose.minio.yml` is a deprecated filename alias. It refuses to run
+unless `BETTER_MINIO_MIGRATION_ACK` is explicitly set, preventing an unnoticed
+backend switch. Once acknowledged it starts SeaweedFS, not MinIO. Prefer the
+new filename after migration. It does **not** read or migrate `better-minio-data`.
+Before upgrading, stop and back up your old stack and preserve the MinIO
+volume. Use a new Compose project/volume and remote repository ID, push from
+a complete Better checkout, and verify a fresh pull plus `better restore frontier`
+before retiring the old server. Do not mount MinIO disk data into SeaweedFS.
+For large installations use a tested S3 migration tool; no automatic migration
+is provided.
+
+To upgrade SeaweedFS, change its version and digest together in the canonical
+overlay, then run the image-pin guard and real Docker push/pull/restore tests.
+The released Better Dockerfile remains unchanged.
 
 ## External S3
 
 Point `better-remote` at real AWS S3 or another S3-compatible endpoint without
-starting MinIO:
+starting a local object store:
 
 ```bash
 export BETTER_REMOTE_AUTH_TOKEN="$BETTER_REPO_TOKEN"
@@ -84,7 +115,7 @@ export BETTER_REMOTE_S3_PATH_STYLE=false
 docker compose -f docker-compose.yml -f docker-compose.s3.yml up -d --build
 ```
 
-`BETTER_REMOTE_S3_PATH_STYLE` should stay `true` for MinIO and most
+`BETTER_REMOTE_S3_PATH_STYLE` should stay `true` for SeaweedFS and most
 S3-compatible endpoints, and `false` for real AWS S3 virtual-hosted-style
 access. If `BETTER_REMOTE_S3_BUCKET` is set, `AWS_ACCESS_KEY_ID` /
 `AWS_SECRET_ACCESS_KEY` are accepted when the `BETTER_REMOTE_S3_*` key
@@ -103,7 +134,7 @@ BETTER_TARGET=aarch64-unknown-linux-gnu docker compose up -d --build
 ## Configuration
 
 ```bash
-BETTER_VERSION=0.4.0
+BETTER_VERSION=0.5.0
 BETTER_TARGET=
 BETTER_REMOTE_PORT=8787
 BETTER_REMOTE_AUTH_TOKEN=   # required for the container's 0.0.0.0 bind
@@ -117,6 +148,6 @@ BETTER_REMOTE_STORAGE=/var/lib/better-remote
 # BETTER_REMOTE_S3_ACCESS_KEY=
 # BETTER_REMOTE_S3_SECRET_KEY=
 # BETTER_REMOTE_S3_PATH_STYLE=
-# MINIO_ROOT_USER=better          # local-dev MinIO overlay only
-# MINIO_ROOT_PASSWORD=betterpassword
+# SEAWEEDFS_ACCESS_KEY=          # required for the SeaweedFS overlay
+# SEAWEEDFS_SECRET_KEY=          # required; no insecure default
 ```

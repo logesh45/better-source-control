@@ -92,19 +92,33 @@ cp "$template" "$tmp"
 replace() {
   placeholder="$1"
   value="$2"
-  if [ -n "$value" ]; then
-    escaped_value="$(printf '%s' "$value" | sed 's/[&|]/\\&/g')"
-    sed -i.bak "s|$placeholder|$escaped_value|g" "$tmp"
-    rm -f "$tmp.bak"
+  if [ -z "$value" ]; then
+    echo "missing required value for $placeholder" >&2
+    exit 1
   fi
+  escaped_value="$(printf '%s' "$value" | sed 's/[&|]/\\&/g')"
+  sed -i.bak "s|$placeholder|$escaped_value|g" "$tmp"
+  rm -f "$tmp.bak"
 }
+
+sha_aarch64_apple_darwin="$(sha_for_target aarch64-apple-darwin)"
+sha_x86_64_apple_darwin="$(sha_for_target x86_64-apple-darwin)"
+sha_aarch64_unknown_linux_gnu="$(sha_for_target aarch64-unknown-linux-gnu)"
+sha_x86_64_unknown_linux_gnu="$(sha_for_target x86_64-unknown-linux-gnu)"
 
 replace "__VERSION__" "$manifest_version"
 replace "__BASE_URL__" "$base_url"
-replace "__SHA256_AARCH64_APPLE_DARWIN__" "$(sha_for_target aarch64-apple-darwin)"
-replace "__SHA256_X86_64_APPLE_DARWIN__" "$(sha_for_target x86_64-apple-darwin)"
-replace "__SHA256_AARCH64_UNKNOWN_LINUX_GNU__" "$(sha_for_target aarch64-unknown-linux-gnu)"
-replace "__SHA256_X86_64_UNKNOWN_LINUX_GNU__" "$(sha_for_target x86_64-unknown-linux-gnu)"
+replace "__SHA256_AARCH64_APPLE_DARWIN__" "$sha_aarch64_apple_darwin"
+replace "__SHA256_X86_64_APPLE_DARWIN__" "$sha_x86_64_apple_darwin"
+replace "__SHA256_AARCH64_UNKNOWN_LINUX_GNU__" "$sha_aarch64_unknown_linux_gnu"
+replace "__SHA256_X86_64_UNKNOWN_LINUX_GNU__" "$sha_x86_64_unknown_linux_gnu"
+
+leftovers="$(grep -oE '__[A-Z0-9_]+__' "$tmp" | sort -u || true)"
+if [ -n "$leftovers" ]; then
+  echo "unreplaced placeholders remain:" >&2
+  printf '%s\n' "$leftovers" >&2
+  exit 1
+fi
 
 mkdir -p "$(dirname "$out")"
 cp "$tmp" "$out"

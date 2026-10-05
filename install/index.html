@@ -150,6 +150,13 @@
       <pre><code>export PATH="$HOME/.local/bin:$PATH"</code></pre>
     </section>
 
+    <section aria-labelledby="powershell-installer">
+      <h2 id="powershell-installer">PowerShell</h2>
+      <p>Windows users can install the latest release with the PowerShell installer:</p>
+      <pre><code>irm https://raw.githubusercontent.com/logesh45/better-source-control/main/install.ps1 | iex</code></pre>
+      <p class="note">The installer places <code>better.exe</code> and <code>better-remote.exe</code> in <code>%USERPROFILE%\.local\bin</code> by default. If that directory is not on your <code>PATH</code>, it prints the directory to add. Then restart the terminal.</p>
+    </section>
+
     <section aria-labelledby="homebrew">
       <h2 id="homebrew">Homebrew</h2>
       <p>Homebrew users can install from the project tap:</p>

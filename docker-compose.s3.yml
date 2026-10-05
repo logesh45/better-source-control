@@ -1,5 +1,5 @@
 # External S3 overlay (real AWS S3 or another S3-compatible endpoint).
-# Does not start MinIO. Set the BETTER_REMOTE_S3_* host variables first:
+# Does not start a local object store. Set the BETTER_REMOTE_S3_* variables first:
 #
 #   docker compose -f docker-compose.yml -f docker-compose.s3.yml up -d --build
 #

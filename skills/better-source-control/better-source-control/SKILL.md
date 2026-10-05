@@ -132,7 +132,7 @@ Homebrew users should run `brew upgrade better`.
 
 Managed daemon handoff during `better update` is automatic when Better can classify the repository daemon as managed. `better update --check`, `better update --dry-run`, and `better --version` do no daemon lifecycle work. The first upgrade from legacy `v0.1.2` may fail closed and emit an exact `better daemon run` recovery command.
 
-Preserved `v0.1.2` must update before sync against current remotes. Migrated repositories reject old binaries locally before network access once the concise-status schema v2 migration ships.
+Preserved `v0.1.2` must update before sync against current remotes. Current clients require remote protocol v4; `v0.1.2` remotes must be upgraded. Schema v2 repositories reject old binaries locally before network access.
 
 ## Report Back
 

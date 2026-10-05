@@ -4,8 +4,8 @@
 # environment instead of being written into repository metadata. See docker/README.md.
 #
 # This file is filesystem storage (BETTER_REMOTE_STORAGE / --storage-root).
-# Local-dev MinIO (better/betterpassword, host ports 9000/9001):
-#   docker compose -f docker-compose.yml -f docker-compose.minio.yml up -d --build
+# Single-node SeaweedFS (requires credentials; loopback S3 port 8333):
+#   docker compose -f docker-compose.yml -f docker-compose.seaweedfs.yml up -d --build
 # External S3:
 #   docker compose -f docker-compose.yml -f docker-compose.s3.yml up -d --build
 services:
@@ -14,9 +14,9 @@ services:
       context: .
       dockerfile: docker/Dockerfile
       args:
-        BETTER_VERSION: ${BETTER_VERSION:-0.4.0}
+        BETTER_VERSION: ${BETTER_VERSION:-0.5.0}
         BETTER_TARGET: ${BETTER_TARGET:-}
-    image: better-source-control/better-remote:${BETTER_VERSION:-0.4.0}
+    image: better-source-control/better-remote:${BETTER_VERSION:-0.5.0}
     environment:
       BETTER_REMOTE_AUTH_TOKEN: ${BETTER_REMOTE_AUTH_TOKEN:?set BETTER_REMOTE_AUTH_TOKEN for non-loopback Docker bind}
       BETTER_REMOTE_STORAGE: /var/lib/better-remote
