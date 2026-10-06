@@ -1,6 +1,6 @@
 ---
 name: better-source-control
-description: Use when a repo uses Better native source control for sessions, checkpoints, workspaces, release frontiers, or remotes.
+description: Install and use Better for agent-native source control, parallel sessions, checkpoints, release frontiers, and remote sync.
 ---
 
 # Better Source Control
@@ -9,7 +9,20 @@ Use Better as the source-control system. Git operations are optional bridge step
 
 ## Quick Start
 
-Use the distributed `better` binary from `PATH`; this skill assumes Better is already installed.
+Use the distributed `better` binary, not a source checkout or debug build. Check `better --version` first. If missing, install it before running the work loop; respect the environment's software-installation permissions.
+
+On macOS/Linux (requires curl and bash):
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/logesh45/better-source-control/main/install.sh -o /tmp/better-install.sh
+bash /tmp/better-install.sh
+export PATH="$HOME/.local/bin:$PATH"
+better --version
+```
+
+The public main installer selects the release; do not hard-code a version. It installs `better` and `better-remote` in `$HOME/.local/bin` by default. The export affects only this shell: do not edit shell startup files silently. If installed but absent from PATH, use `$HOME/.local/bin/better` or the shell-local export, rather than reinstalling. Do not disable checksum checks or TLS validation. On Windows, use the Windows instructions/assets at https://betterforagents.com/install/; the bash installer is not a native PowerShell installer. If installation is blocked, report the precise blocker rather than trying source builds.
+
+For a repository without `.better/`, initialize it or import its Git snapshot as described below. For an existing repository, inspect state before changing it:
 
 ```bash
 better --json status
@@ -29,7 +42,6 @@ better init
 better --json import git            # imports HEAD as accepted frontier
 better --json import git <ref>      # import another commit/ref
 better --json import git --adopt-upstream  # adopt current Git HEAD after pulling/rebasing upstream
-better --json import git --force    # replace an existing frontier
 ```
 
 Use `--adopt-upstream` only after a pull/rebase when the current Better frontier is already the latest Git-imported/adopted frontier or already matches Git `HEAD`. It preserves previous Better releases, refuses native-only frontier work, and only accepts `HEAD` as the ref.
@@ -57,7 +69,20 @@ better session update "$session" --file newly/touched/file
 better --json checkpoint --session "$session" --message "what changed"
 ```
 
-Update claims before checkpointing. Git status is not enough for Better release composition.
+Update claims before checkpointing. Git status is not enough for Better release composition. Run the actual test/check commands before checkpointing: `--check` records intent, not test execution. Each subagent owns its own session and workspace; compose those worker checkpoints directly, never replace their provenance with a catch-all parent session. A workspace starts from the accepted frontier, not arbitrary uncheckpointed checkout edits.
+
+## Inspect and Restore
+
+```bash
+better history log --limit 20
+better restore checkpoint <checkpoint-id> --dry-run
+better restore release <release-id> --dry-run
+better restore frontier --dry-run
+```
+
+Use full returned IDs, not invented short names. A dry-run reports planned filesystem changes, not checkpoint source contents or test results. Inspect saved code in a safe checkout before deciding to reuse it. Actual restore omits `--dry-run` and changes files in the current checkout; protect unrelated edits first. Absent paths are preserved by default. Use `--delete-absent` only for intentional removal and `--force` only after reviewing why protection blocked the restore. Never repair state by editing SQLite or object files directly.
+
+For optional semantic/graph context: `better index scan`, `better graph status`, and `better daemon scan`. These advisory indexes do not replace saved checkpoints, tests, or the accepted frontier.
 
 ## Session Cleanup
 
@@ -77,6 +102,8 @@ better --json release accept <release-id> --by agent:codex
 better restore frontier
 ```
 
+In a fresh workspace-only repository, the main checkout may still lack the newly accepted files. If restore reports uncheckpointed changes, review `better restore frontier --dry-run` and the checkout first. Only when the accepted frontier is the intended state and no unrelated edits need preserving, use `better restore frontier --force`.
+
 If compose fails, fix the signal:
 
 - `file_overlap` / `symbol_overlap`: reconcile or supersede.
@@ -92,7 +119,17 @@ better sync pull
 better sync push
 ```
 
-If no remote exists: `better remote init local --url http://127.0.0.1:8787`.
+For a new remote repository: `better remote init local --url <remote-url>`. For another checkout of an existing remote, initialize Better and reuse the source repository's `repo_id` from `.better/remotes/<name>.toml`:
+
+```bash
+better init
+better remote init local --url <remote-url> --repo-id <source-repo-id>
+better sync pull
+better restore frontier --dry-run
+better restore frontier
+```
+
+Do not omit `--repo-id` when joining an existing repository. Pull imports stored state; restore materializes its accepted frontier. Configure authentication with `--credential-env <ENV_VAR>` when required; never commit bearer credentials. Self-hosting setup: https://betterforagents.com/remote/.
 If push says `remote frontier advanced; pull first`, pull and inspect status; do not force-push.
 First/high-history pushes can still upload many reachable objects. Sync uses bounded missing-object negotiation, separate object upload, progress output, and metadata deltas when the remote supports them.
 
@@ -132,7 +169,7 @@ Homebrew users should run `brew upgrade better`.
 
 Managed daemon handoff during `better update` is automatic when Better can classify the repository daemon as managed. `better update --check`, `better update --dry-run`, and `better --version` do no daemon lifecycle work. The first upgrade from legacy `v0.1.2` may fail closed and emit an exact `better daemon run` recovery command.
 
-Preserved `v0.1.2` must update before sync against current remotes. Current clients require remote protocol v4; `v0.1.2` remotes must be upgraded. Schema v2 repositories reject old binaries locally before network access.
+Preserved `v0.1.2` must update before sync against current remotes. Migrated schema-v2 repositories reject incompatible old binaries locally before network access. Do not downgrade or reset their metadata to bypass that guard.
 
 ## Report Back
 
